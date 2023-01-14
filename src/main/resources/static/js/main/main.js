@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded',function(){
 	const data = {
 		"code" : code.value,
 		"clientId" : 'd91f8584-0a52-41a9-97a9-0488e3cefeeb',
-		"clientSecret" :'', 
+		"clientSecret" :'ttt', 
 		"redirectUri" :'http://localhost:3000/main',
 		"grantType" : 'authorization_code'
 	}
