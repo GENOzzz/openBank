@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/common/common.css" />
+    <link rel="stylesheet" href="/css/main/main.css" />
+    <title>오픈뱅킹_VEINX</title>
+  </head>
+  <body style="width: 100%; height: 100vh">
+  	<form id="mainForm" method="post" action="/main/access">
+	  	<input type="hidden" id="code" name="code" th:value="${code}"/>
+		<input type="hidden" id="token_type" name="tokenType"/>
+		<input type="hidden" id="access_token" name="accessToken"/>
+		<input type="hidden" id="refresh_token" name="refreshToken"/>
+		<input type="hidden" id="expires_in" name="expiresIn"/>
+		<input type="hidden" id="scope" name="scope"/>
+		<input type="hidden" id="user_seq_no" name="userSeqNo"/>
+	</form>
+    <div class="base">
+      <div class="left container">
+        <div class="mt100 container_child">은행</div>
+        <div class="mt200 container_child">잔액</div>
+        <div class="mt450 container_child">
+			<button onclick="accountInquiry()">TEST</button>
+		</div>
+        <div class="mt550 container_child">거래내역</div>
+        <div class="mt650 container_child">입금내역</div>
+        <div class="mt750 container_child">출금내역</div>
+      </div>
+      <div class="right container">
+        <div class="mt100 container_child">TITLE</div>
+        <div class="mt150 container_child2">Excel</div>
+        <div
+          class="w1200 h100v mt200 container_child"
+          style="background-color: black; color: white"
+        >
+          TABLE
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="/js/main/main.js"></script>
+</html>

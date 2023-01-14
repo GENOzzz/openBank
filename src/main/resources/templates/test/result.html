@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>RESULT</title>
+</head>
+<style>
+    table{
+        border: 1px solid;
+    }
+    tr{
+        border: 1px solid;
+    }
+    th{
+        border: 1px solid;
+    }
+    td{
+        border: 1px solid;
+        justify-content:'center';
+        align-items:'center';
+
+    }
+    p{
+        color:'black';
+    }
+</style>
+<body>
+RESULT!!
+<div style="display:block">
+    <table>
+        <caption>코드</caption>
+        <colgroup>
+            <col width="6%">
+            <col width="17%">
+        </colgroup>
+        <tr>
+            <th>
+                코드 !!
+            </th>
+            <td th:text="${code}">
+            </td>
+				<input type="hidden" id="code" th:value="${code}"/>
+        </tr>
+        <tr>
+            <th>
+                스코프
+            </th>
+            <td th:text="${scope}">
+            </td>
+        </tr>
+        <tr>
+            <th>
+                client_info
+            </th>
+            <td th:text="${clientInfo}">
+            </td>
+        </tr>
+        <tr>
+            <th>
+                상태
+            </th>
+            <td th:text="${state}">
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="display:inline-block; width:200px; height:200px">
+    <p>access_token</p>
+    <p id="access_token"></p>
+    <p>refresh_token</p>
+    <p id="refresh_token"></p>
+    <p>user_seq_no</p>
+    <p id="user_seq_no"></p>
+</div>
+</body>
+<script src="/js/test/result.js"></script>
+</html>

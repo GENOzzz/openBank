@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/common/common.css" />
+    <link rel="stylesheet" href="css/login/login.css"/>
+    <title>로그인</title>
+  </head>
+  <body style="width: 100%; height: 100vh; background-color: grey">
+    <div class="base">
+      <div class="w400 h600 container">
+        <div class="w300 h200 mt20 container_child">
+          <img style="width: 100%; height: 100%" src="images/logo/VeinX_1.png" />
+        </div>
+        <form id="loginForm">
+	        <div class="w300 h100 mt250 container_child">
+	          <input id="id" name="loginId" class="w300 h40 br5" placeholder="아이디" />
+	        </div>
+	        <div class="w300 h100 mt350 container_child">
+	          <input type="password" id="pw" name="loginPassword" class="w300 h40 br5" placeholder="비밀번호" />
+	        </div>
+        </form>
+        <div class="w300 h100 mt450 container_child">
+          <button class="br10 sign_button" onclick="signUp()">인증</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="/js/index.js"></script>
+</html>
