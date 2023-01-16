@@ -30,7 +30,7 @@ public class LoginService {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection(dbFileUrl);
-			System.out.println("SQLite DB Connected!");
+			System.out.println("LOGIN DB CONNECT");
 			
 			stmt = con.createStatement();
 			
@@ -41,16 +41,23 @@ public class LoginService {
 					+ "REFRESH_TOKEN, "
 					+ "USER_SEQ_NO "
 					+ "from TBL_LOGIN tl "
-					+ "left join TBL_TOKEN tt on tl.LOGIN_KEY = tt.LOGIN_KEY");
+					+ "left join TBL_TOKEN tt on tl.LOGIN_KEY = tt.LOGIN_KEY "
+					+ "where "
+					+ "LOGIN_ID = '"+loginDTO.getLoginId()+"';");
 
 			while(rs.next()) {
 				if(passwordEncoder.matches(loginDTO.getLoginPassword(), rs.getString("LOGIN_PASSWORD"))) {
 					tokenDTO.setLoginResult(true);
+					tokenDTO.setLoginId(rs.getString("LOGIN_ID"));
 					tokenDTO.setAccessToken(rs.getString("ACCESS_TOKEN"));
 					tokenDTO.setRefreshToken(rs.getString("REFRESH_TOKEN"));
 					tokenDTO.setUserSeqNo(rs.getString("USER_SEQ_NO"));
+				}else {
+					tokenDTO.setLoginResult(false);
 				}
 			}
+			
+			System.out.println(tokenDTO.toString());
 			
 			rs.close();
 			stmt.close();
@@ -62,6 +69,54 @@ public class LoginService {
 		}
 		
 		return tokenDTO;
+	}
+	
+public LoginDTO getLoginMember(String loginId) {
+		
+		Connection con = null;//connector
+		Statement stmt = null;//??
+		ResultSet rs = null;//??
+		
+		LoginDTO loginDTO = new LoginDTO();
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection(dbFileUrl);
+			System.out.println("SQLite DB Connected!");
+			
+			stmt = con.createStatement();
+			
+			rs = stmt.executeQuery("select "
+					+ "LOGIN_ID,"
+					+ "LOGIN_PASSWORD, "
+					+ "ACCESS_TOKEN, "
+					+ "REFRESH_TOKEN, "
+					+ "USER_SEQ_NO "
+					+ "from TBL_LOGIN tl "
+					+ "left join TBL_TOKEN tt on tl.LOGIN_KEY = tt.LOGIN_KEY "
+					+ "where "
+					+ "LOGIN_ID = '"+loginId+"';");
+			
+			while(rs.next()) {
+				loginDTO.setLoginId(rs.getString("login_id"));
+				loginDTO.setLoginPassword(rs.getString("login_passwork"));
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+			
+			
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		if(loginDTO.getLoginId()!="") {
+			return loginDTO;			
+		}else {
+			return null;
+		}
+		
 	}
 	
 }

@@ -30,26 +30,42 @@ window.addEventListener('DOMContentLoaded',function(){
 		.then(data => {
 			console.log('sucess',data)
 			
-			access_token.value = data.access_token;
-			refresh_token.value = data.refresh_token;
-			user_seq_no.value=data.user_seq_no;
-			token_type.value = data.token_type;
-			expires_in.value = data.expires_in;
-			scope.value = data.scope;
-	
-			const formData = new FormData(document.getElementById('mainForm'));
+			if(data.rsp_code=='O0001'){
+				alert(data.rsp_message)
+			}else{
+				access_token.value = data.access_token;
+				refresh_token.value = data.refresh_token;
+				user_seq_no.value=data.user_seq_no;
+				token_type.value = data.token_type;
+				expires_in.value = data.expires_in;
+				scope.value = data.scope;
+		
+				const formData = new FormData(document.getElementById('mainForm'));
+				
+				console.log(formData)
+				
+				if(access_token.value != undefined){
+					fetch("http://localhost:3000/token/access",{
+						method:'POST',
+						cache:'no-cache',
+						body:formData
+					})
+					.then(res=>{console.log(res)
+					res.json()})
+					.then(data=>{
+						console.log('success',data)
+						if(data == false){
+							alert('wrong data...')
+							window.location='http://localhost:3000/login/logout'
+						}
+						})
+					.catch(data=>console.log('fail',data))
+				}else{
+					console.log ('something wrong')
+				}
+				
+			}
 			
-			console.log(formData)
-			
-			fetch("http://localhost:3000/token/access",{
-				method:'POST',
-				cache:'no-cache',
-				body:formData
-			})
-			.then(res=>{console.log(res)
-			res.json()})
-			.then(data=>console.log('success',data))
-			.catch(data=>console.log('fail',data))
 		})
 		.catch(data => console.log('fail',data))
 	}else{
@@ -62,17 +78,15 @@ window.addEventListener('DOMContentLoaded',function(){
 
 });
 
-function accountInquiry(){
-	
-	const url = `https://openapi.openbanking.or.kr/v2.0/account/list?user_seq_no=1101018571&include_cancel_yn=N&sort_order=D`	
-	
-	fetch(url,{
-		method : 'GET',
-		headers:{
-			'Authorization':`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAxMDE4NTcxIiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2ODEyNTk1NzAsImp0aSI6IjkyMjlhYmUxLWJlOTgtNGNmNi1iM2YwLTFhYTIxZDczMDMyYSJ9.H8CkZWYoFhmahb8aYkUFANC7C1SBmgDrmg-2ssdi2e0`
-		}
+function logout(){
+	window.location="http://localhost:3000/login/logout"	
+}
+
+function accountList(){
+	fetch("http://localhost:3000/account/list",{
+		method:'post'	
 	})
-	.then(res => res.json())
-	.then(data => console.log('success',data))
-	.catch(data=>conosle.log('fail',data))
+	.then(res=>res.json())
+	.then(data=>console.log(data))
+	.catch(data=>console.log('error',data))
 }

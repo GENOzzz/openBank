@@ -1,6 +1,7 @@
 package com.test.demo.main.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,9 +36,9 @@ public class MainController {
 	 * @return
 	 */
 	@GetMapping("")
-	public String main(HttpServletRequest req,Model model){
+	public String main(HttpServletRequest req,HttpSession session,Model model){
         
-		System.out.println("rerereere");
+		TokenDTO tokenDTO = (TokenDTO) session.getAttribute("tokenDTO");
 		
 		String code = req.getParameter("code");
        if(code!="") {

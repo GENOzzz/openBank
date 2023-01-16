@@ -28,24 +28,9 @@ function signUp(){
 		}
 		if(tokenDTO.accessToken){
 			
-			console.log(tokenDTO)
-						
-			const header = new Headers();
+			const signCancelUri = 'http://localhost:3000/main'
 			
-			header.append('Kftc-Bfop-UserSeqNo',tokenDTO.userSeqNo);
-			header.append('Kftc-Bfop-UserCI',tokenDTO.accessToken);
-			header.append('Kftc-Bfop-UserCI',tokenDTO.userCI)
-			
-			window.Headers.append('Kftc-Bfop-UserSeqNo',tokenDTO.userSeqNo);
-			
-			
-			window.location="https://testapi.openbanking.or.kr/oauth/2.0/authorize?"+
-          "response_type=code&"+
-          "client_id=d91f8584-0a52-41a9-97a9-0488e3cefeeb&"+
-          "redirect_uri=http://localhost:3000/main&"+
-          "scope=login inquiry transfer&"+
-          "state=12345678901234567890123456789012&"+
-          "auth_type=2";		
+			window.location=signCancelUri;	
 			
 		}else{
 			window.location="https://testapi.openbanking.or.kr/oauth/2.0/authorize?"+

@@ -6,24 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/common/common.css" />
     <link rel="stylesheet" href="/css/main/main.css" />
+    
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
     <title>오픈뱅킹_VEINX</title>
   </head>
   <body style="width: 100%; height: 100vh">
   	<form id="mainForm" method="post" action="/main/access">
+		<input type="hidden" id="login_id" name="loginId" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.loginId}"/>
+		<input type="hidden" id="login_id" name="loginId" th:if="${session.tokenDTO==null}"/>
 	  	<input type="hidden" id="code" name="code" th:value="${code}"/>
 		<input type="hidden" id="token_type" name="tokenType"/>
-		<input type="hidden" id="access_token" name="accessToken"/>
+		<input type="hidden" id="access_token" name="accessToken" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.accessToken}"/>
+		<input type="hidden" id="access_token" name="accessToken" th:if="${session.tokenDTO==null}"/>
 		<input type="hidden" id="refresh_token" name="refreshToken"/>
 		<input type="hidden" id="expires_in" name="expiresIn"/>
 		<input type="hidden" id="scope" name="scope"/>
-		<input type="hidden" id="user_seq_no" name="userSeqNo"/>
+		<input type="hidden" id="user_seq_no" name="userSeqNo" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.userSeqNo}"/>
+		<input type="hidden" id="user_seq_no" name="userSeqNo" th:if="${session.tokenDTO==null}"/>
 	</form>
     <div class="base">
       <div class="left container">
+      	<div class="mt50 container_child2">
+			<button type="button" onclick="logout()">logout</button>	
+		</div>
         <div class="mt100 container_child">은행</div>
         <div class="mt200 container_child">잔액</div>
         <div class="mt450 container_child">
-			<button onclick="accountInquiry()">TEST</button>
+			<button onclick="accountList()">TEST</button>
 		</div>
         <div class="mt550 container_child">거래내역</div>
         <div class="mt650 container_child">입금내역</div>

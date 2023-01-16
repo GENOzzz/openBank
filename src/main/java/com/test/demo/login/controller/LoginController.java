@@ -1,6 +1,7 @@
 package com.test.demo.login.controller;
 
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,23 +29,13 @@ import com.test.demo.model.TokenDTO;
 
 @Controller
 @RequestMapping("/login")
-public class LoginRestController {
+public class LoginController {
 	
-	@Autowired
-	LoginService loginService;
-	
-	@PostMapping("/do")
-	@ResponseBody
-	public Map<String,Object> login(HttpSession session,@ModelAttribute LoginDTO loginDTO) {	
+	@GetMapping("/logout")
+	public String login(HttpSession session) {	
+
+		session.invalidate();
 		
-		Map<String,Object> map = new HashMap<String,Object>();
-		TokenDTO tokenDTO = loginService.loginDo(loginDTO);
-		map.put("tokenDTO", tokenDTO);
-		
-		if(tokenDTO.getAccessToken()!="") {
-			session.setAttribute("tokenDTO", tokenDTO);
-		}
-		
-		return map;
+		return "redirect:/";
 	}
 }
