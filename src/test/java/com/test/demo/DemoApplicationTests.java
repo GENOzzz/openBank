@@ -22,6 +22,18 @@ class DemoApplicationTests {
 	PasswordEncoder passwordEncoder;
 	
 	@Test
+	void testTime() {
+		Date now = new Date();
+		
+		SimpleDateFormat format = new SimpleDateFormat("HHmmssSSS");
+		
+		String time = format.format(now);
+		
+		System.out.println(time);
+		
+	}
+	
+	//@Test
 	void contextLoads() {
 		Connection con = null;//connector
 		Statement stmt = null;//??

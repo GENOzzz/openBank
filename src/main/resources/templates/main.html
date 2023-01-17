@@ -25,32 +25,29 @@
 		<input type="hidden" id="scope" name="scope"/>
 		<input type="hidden" id="user_seq_no" name="userSeqNo" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.userSeqNo}"/>
 		<input type="hidden" id="user_seq_no" name="userSeqNo" th:if="${session.tokenDTO==null}"/>
+		<input type="hidden" id="bank_tran_id" name="bankTranId" th:value="M202300052"/>
 	</form>
     <div class="base">
-      <div class="left container">
+      <div class="left container" id="left_container">
       	<div class="mt50 container_child2">
 			<button type="button" onclick="logout()">logout</button>	
 		</div>
-        <div class="mt100 container_child">은행</div>
-        <div class="mt200 container_child">잔액</div>
-        <div class="mt450 container_child">
-			<button onclick="accountList()">TEST</button>
-		</div>
-        <div class="mt550 container_child">거래내역</div>
-        <div class="mt650 container_child">입금내역</div>
-        <div class="mt750 container_child">출금내역</div>
       </div>
-      <div class="right container">
-        <div class="mt100 container_child">TITLE</div>
-        <div class="mt150 container_child2">Excel</div>
+      <div class="right container" id="right_container">
+        <div class="mt50 container_child" style="font-size: 50px;">TITLE</div>
+        <div class="mt100 container_child2">Excel</div>
         <div
-          class="w1200 h100v mt200 container_child"
-          style="background-color: black; color: white"
-        >
-          TABLE
+          class="w1200 h800 mt150 mb100 brs1 br10 container_child"
+          id="table"
+          style="background-color: white; color: black;"
+          >
         </div>
       </div>
     </div>
   </body>
   <script src="/js/main/main.js"></script>
+  <script src="/js/main/won.js"></script>
+  <script src="/js/main/account/list.js"></script>
+  <script src="/js/main/account/cancel.js"></script>
+  <script src="/js/main/balance.js"></script>
 </html>

@@ -75,18 +75,11 @@ window.addEventListener('DOMContentLoaded',function(){
 		}
 	}
 	
+	accountList()
+	
 
 });
 
 function logout(){
 	window.location="http://localhost:3000/login/logout"	
-}
-
-function accountList(){
-	fetch("http://localhost:3000/account/list",{
-		method:'post'	
-	})
-	.then(res=>res.json())
-	.then(data=>console.log(data))
-	.catch(data=>console.log('error',data))
 }

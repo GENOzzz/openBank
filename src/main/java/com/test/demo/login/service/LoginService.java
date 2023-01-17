@@ -57,8 +57,6 @@ public class LoginService {
 				}
 			}
 			
-			System.out.println(tokenDTO.toString());
-			
 			rs.close();
 			stmt.close();
 			con.close();

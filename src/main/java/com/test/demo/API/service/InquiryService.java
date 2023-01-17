@@ -1,36 +1,43 @@
-package com.test.demo.API.controller;
+package com.test.demo.API.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.test.demo.model.TokenDTO;
 
-@Controller
-@RequestMapping(value="/account")
-public class accountRestController {
+@Service
+public class InquiryService {
 	
-	@PostMapping("/list")
-	@ResponseBody
-	private JSONObject test(Model model) throws MalformedURLException{
-		final String uri = "https://testapi.openbanking.or.kr/v2.0/account/list?user_seq_no=1101018571&include_cancel_yn=N&sort_order=D";
+	public JSONObject inquiryBalance(TokenDTO tokenDTO) throws MalformedURLException {
 		
-		JSONObject jsonObj = null;
+		Date now = new Date();
+		
+		SimpleDateFormat tranIdFormat = new SimpleDateFormat("HHmmssSSS");
+		String tranIdTime = tranIdFormat.format(now);
+		
+		SimpleDateFormat tranDtimeFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		String dTime = tranDtimeFormat.format(now);
+				
+		final String bankTranId = tokenDTO.getBankTranId()+"U"+tranIdTime; //이용기관코드
+		System.out.println(bankTranId);
+		
+		final String uri = "https://testapi.openbanking.or.kr/v2.0/account/balance/fin_num?bank_tran_id="+bankTranId+"&fintech_use_num="+tokenDTO.getFintechUseNum()+"&tran_dtime="+dTime;
+		JSONObject jsonObj = null; 																															
+		JSONParser parser = new JSONParser();
 		
 		URL url = new URL(uri);
 
@@ -43,11 +50,11 @@ public class accountRestController {
 
 		  try {
 		    HttpURLConnection con = (HttpURLConnection)url.openConnection();
-
+		    
 		    //Request Header 정의
 		    con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 		    
-		    con.setRequestProperty("Authorization", "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAxMDE4NTcxIiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2ODE2MjcwMzIsImp0aSI6ImNmYjIzOWJkLWRlOWQtNGY2Yy05NTMzLTA5MmM2YmY4NjdkOCJ9.zgdq3KWfDG6S6NQRJ4UZrog_T2V8b-7Lb7bWj6dxfIU");
+		    con.setRequestProperty("Authorization", "Bearer "+tokenDTO.getAccessToken());
 		    
 		    //전송방식
 		    con.setRequestMethod("GET");
@@ -73,15 +80,12 @@ public class accountRestController {
 		      br.close();
 		      System.out.println(sb.toString());
 		      
-		      JSONParser parser = new JSONParser();
 		      Object obj = parser.parse(sb.toString());
 		      jsonObj = (JSONObject)obj;
 		      
-		      mapper.readValue(sb.toString(), new TypeReference<List<Map<String, Object>>>(){});
-		      model.addAttribute("listMap", listMap);
 		      
 		    } else {
-		    	model.addAttribute("error", con.getResponseMessage());
+		    	jsonObj = (JSONObject) parser.parse("{\"error\": \"error\"}");
 		    }
 		  } catch (Exception e) {
 		  	System.err.println(e.toString());
@@ -89,4 +93,5 @@ public class accountRestController {
 		  
 		  return jsonObj;
 	}
+
 }

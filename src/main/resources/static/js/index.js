@@ -30,7 +30,7 @@ function signUp(){
 			
 			const signCancelUri = 'http://localhost:3000/main'
 			
-			window.location=signCancelUri;	
+			window.location=signCancelUri;
 			
 		}else{
 			window.location="https://testapi.openbanking.or.kr/oauth/2.0/authorize?"+
