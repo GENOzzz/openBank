@@ -27,4 +27,13 @@ public class InquiryRestController {
 		return inquiryService.inquiryBalance(tokenDTO);
 	}
 	
+	@PostMapping("/transactional")
+	@ResponseBody
+	private JSONObject transactional(@ModelAttribute TokenDTO tokenDTO) throws MalformedURLException{
+		System.out.println("===inquiry transctional");
+		return inquiryService.transactional(tokenDTO);
+	}
+	
+	
+	
 }

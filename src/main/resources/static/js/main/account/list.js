@@ -75,6 +75,7 @@ function accountList(){
 			
 			const transactionalInquiryButton = document.createElement('button');
 			transactionalInquiryButton.innerText='거래 내역 조회';
+			transactionalInquiryButton.setAttribute('onclick',`transactionalInquiry(${idx})`);
 			buttonDom.appendChild(transactionalInquiryButton);
 			
 			const accountCancelButton = document.createElement('button');

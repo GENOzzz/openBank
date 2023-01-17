@@ -36,8 +36,6 @@ public class AccountService {
 		  StringBuilder sb = new StringBuilder();
 		  BufferedReader br;
 
-		 List<Map<String,Object>> listMap = new ArrayList< Map<String,Object> >();
-
 		  try {
 		    HttpURLConnection con = (HttpURLConnection)url.openConnection();
 		    
