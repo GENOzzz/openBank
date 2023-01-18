@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +30,13 @@ public class InquiryRestController {
 	
 	@PostMapping("/transactional")
 	@ResponseBody
-	private JSONObject transactional(@ModelAttribute TokenDTO tokenDTO) throws MalformedURLException{
+	private JSONObject transactional(Model model,@ModelAttribute TokenDTO tokenDTO) throws MalformedURLException{
 		System.out.println("===inquiry transctional");
-		return inquiryService.transactional(tokenDTO);
+		JSONObject result = inquiryService.transactional(tokenDTO);
+		/*if(result.get("rsp_code")=="A000") {
+			model.addAttribute("rsp_list",result.get("rsp_list"));
+		}*/
+		return result;
 	}
 	
 	

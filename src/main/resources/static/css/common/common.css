@@ -10,7 +10,7 @@
   width: 100px;
 }
 
-.w100v {
+.w100p {
   width: 100%;
 }
 
@@ -44,6 +44,18 @@
 
 .h40 {
   height: 40px;
+}
+
+.h50 {
+  height: 50px;
+}
+
+.h60 {
+  height: 60px;
+}
+
+.h90 {
+  height: 90px;
 }
 
 .h100 {
@@ -84,6 +96,18 @@
 
 .h600 {
   height: 600px;
+}
+
+.h620 {
+  height: 620px;
+}
+
+.h630 {
+  height: 630px;
+}
+
+.h640 {
+  height: 640px;
 }
 
 .h800{
@@ -212,4 +236,12 @@
 
 .lh30{
 	line-height: 30px;
+}
+
+.lh50{
+	line-height: 50px;
+}
+
+.lh60{
+	line-height: 60px;
 }

@@ -12,7 +12,7 @@ public class testRestController {
 	
 	@PostMapping("/result")
 	private void test() {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ REST TEST");
+		System.out.println("REST TEST");
 	}
 	
 	@PostMapping("/prg")

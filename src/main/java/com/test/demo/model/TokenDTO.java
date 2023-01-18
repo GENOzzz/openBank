@@ -18,4 +18,5 @@ public class TokenDTO extends LoginDTO{
 	
 	private String fintechUseNum;
 	private String bankTranId;
+	private String period;
 }

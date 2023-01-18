@@ -28,7 +28,7 @@ public class TokenRestController {
 	@PostMapping("/access")
 	@ResponseBody
 	public boolean tokenAccess(@ModelAttribute TokenDTO tokenDTO){
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.out.println("token access");
 		System.out.println(tokenDTO.toString());
 		tokenDTO.setInputKey(0);
 		tokenService.addToken(tokenDTO);

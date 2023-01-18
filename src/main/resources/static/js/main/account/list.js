@@ -25,7 +25,7 @@ function accountList(){
 		for(let idx in accountList){
 			const account = accountList[idx];
 			//console.log(account);
-			/**bank account dom */
+			/**bank account Container */
 			const div = document.createElement('div');
 			div.classList=`w350 h115 mt${idx*150+100} brs1 br5 container_child`;
 			
@@ -57,37 +57,37 @@ function accountList(){
 			nameContainer.appendChild(nameDiv);
 			div.appendChild(nameContainer);
 			
-			/**bank account num dom*/
+			/**bank account num Container*/
 			const accountNum = document.createElement('div')
 			accountNum.classList='h30 ml5 mt5 mr5 brs1 lh30';
 			accountNum.innerText = account.account_num_masked;
 			div.appendChild(accountNum);
 			
-			/**button dom */
-			const buttonDom = document.createElement('div')
-			buttonDom.classList='h30 ml5 mt5 mr5 brs1 lh30';
-			buttonDom.setAttribute('style','justify-content:space-around; display:flex');
+			/**button Container */
+			const buttonContainer = document.createElement('div')
+			buttonContainer.classList='h30 ml5 mt5 mr5 brs1 lh30';
+			buttonContainer.setAttribute('style','justify-content:space-around; display:flex');
 			
 			const balanceInquiryButton = document.createElement('button');
 			balanceInquiryButton.innerText='잔액 조회';
 			balanceInquiryButton.setAttribute('onclick',`balanceInquiry(${idx})`)
-			buttonDom.appendChild(balanceInquiryButton);
+			buttonContainer.appendChild(balanceInquiryButton);
 			
 			const transactionalInquiryButton = document.createElement('button');
 			transactionalInquiryButton.innerText='거래 내역 조회';
-			transactionalInquiryButton.setAttribute('onclick',`transactionalInquiry(${idx})`);
-			buttonDom.appendChild(transactionalInquiryButton);
+			transactionalInquiryButton.setAttribute('onclick',`transactionalInquiry(${idx}, 'all')`);
+			buttonContainer.appendChild(transactionalInquiryButton);
 			
 			const accountCancelButton = document.createElement('button');
 			accountCancelButton.innerText='계좌 해지';
 			accountCancelButton.setAttribute('onclick',`accountCancel(${idx})`);
-			buttonDom.appendChild(accountCancelButton);
+			buttonContainer.appendChild(accountCancelButton);
 			
 			const test2InquiryButton = document.createElement('button');
 			test2InquiryButton.innerText='test';
-			buttonDom.appendChild(test2InquiryButton);
+			buttonContainer.appendChild(test2InquiryButton);
 			
-			div.appendChild(buttonDom);
+			div.appendChild(buttonContainer);
 			
 			reftContainer.appendChild(div);
 			

@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -97,17 +98,40 @@ Date now = new Date();
 		SimpleDateFormat tranIdFormat = new SimpleDateFormat("HHmmssSSS");
 		String tranIdTime = tranIdFormat.format(now);
 		final String bankTranId = tokenDTO.getBankTranId()+"U"+tranIdTime; //이용기관코드
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@");
-		System.out.println(bankTranId);
 		
 		SimpleDateFormat tranDtimeFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String dTime = tranDtimeFormat.format(now);
 		
 		SimpleDateFormat toDateFormat = new SimpleDateFormat("yyyyMMdd");
 		String toDate = toDateFormat.format(now);
+		
+		SimpleDateFormat toTimeFormat = new SimpleDateFormat("HHmmss");
+		String toTime = toTimeFormat.format(now);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(now);
+		String fromDate ;
+		
+		if(!tokenDTO.getPeriod().equals("all") && !tokenDTO.getPeriod().equals("undefined") && tokenDTO.getPeriod()!=null) {
+			cal.add(Calendar.DATE, -Integer.parseInt(tokenDTO.getPeriod()));
+			fromDate = toDateFormat.format(cal.getTime());
+		}else {
+			cal.add(Calendar.YEAR, -10);
+			fromDate = toDateFormat.format(cal.getTime());
+		}
 				
 		
-		final String uri = "https://testapi.openbanking.or.kr/v2.0/account/transaction_list/fin_num?bank_tran_id="+bankTranId+"&fintech_use_num="+tokenDTO.getFintechUseNum()+"&inquiry_base=D&inquiry_type=A&from_date=20190101&to_date="+toDate+"&sort_order=D&tran_dtime="+dTime;
+		final String uri = "https://testapi.openbanking.or.kr/v2.0/account/transaction_list/fin_num?"
+				+ "bank_tran_id="+bankTranId+"&"
+						+ "fintech_use_num="+tokenDTO.getFintechUseNum()+"&"
+								+ "inquiry_base=D&"
+								+ "inquiry_type=A&"
+								+ "from_date="+fromDate+"&"
+								+ "from_time=000000&"
+								+ "to_date="+toDate+"&"
+										+ "to_time="+toTime+"&"
+										+ "sort_order=D&"
+										+ "tran_dtime="+dTime;
 		JSONObject jsonObj = null; 																															
 		JSONParser parser = new JSONParser();
 		
@@ -148,7 +172,7 @@ Date now = new Date();
 		      sb.append(line).append("\n");
 		      }
 		      br.close();
-		      System.out.println(sb.toString());
+		      //System.out.println(sb.toString());
 		      
 		      Object obj = parser.parse(sb.toString());
 		      jsonObj = (JSONObject)obj;

@@ -35,19 +35,20 @@ function balanceInquiry(idx){
 		const table = document.getElementById('table');
 
 		if(table.firstElementChild){
-			let amtContainer = table.firstElementChild;
-			table.removeChild(amtContainer);
+			let baseContainer = table.firstElementChild;
+			table.removeChild(baseContainer);
 		}
 		
-		const amtContainer = document.createElement('div');
-		amtContainer.classList="w1000 h500 brs1 br5";
-		amtContainer.setAttribute('id','amtContainer')
+		/**base container */
+		const baseContainer = document.createElement('div');
+		baseContainer.classList="w1000 h500 brs1 br5";
+		baseContainer.setAttribute('id','baseContainer')
 		
 		/**bank name */
 		const bankName = document.createElement('div');
 		bankName.classList='w400 h30 brs1 br5 mt10 ml10';
 		bankName.innerText = `${data.bank_name} (${data.product_name})`;
-		amtContainer.append(bankName);
+		baseContainer.append(bankName);
 		
 		/**balance_amt 잔액*/
 		const balanceAmt = document.createElement('div');
@@ -57,7 +58,7 @@ function balanceInquiry(idx){
 		const changeBalance = chaingeWon(data.balance_amt);
 		const koreanBalanceMoney = numberToKorean(data.balance_amt);
 		balanceAmt.innerText=`잔액 :  ₩ ${changeBalance} (${koreanBalanceMoney}원)`;
-		amtContainer.append(balanceAmt);
+		baseContainer.append(balanceAmt);
 		
 		/**available_amt 출금 가능 금액*/
 		const availableAmt = document.createElement('div');
@@ -67,13 +68,13 @@ function balanceInquiry(idx){
 		const changeAvailable = chaingeWon(data.available_amt);
 		const koreanMoney = numberToKorean(data.available_amt);
 		availableAmt.innerText=`출금 가능 금액 :  ₩ ${changeAvailable} (${koreanMoney}원)`;
-		amtContainer.append(availableAmt);
+		baseContainer.append(availableAmt);
 				
 		console.log(table);
 		
 		
 		
-		table.append(amtContainer);
+		table.append(baseContainer);
 		
 		
 		
