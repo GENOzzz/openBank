@@ -27,10 +27,11 @@ function balanceInquiry(idx){
 		console.log(data);
 		
 		
-		for(let key in data){
+		/*for(let key in data){
 			console.log('key',key)
 			console.log('value',data[key])
-		}
+		}*/
+		
 		/**table */
 		const table = document.getElementById('table');
 

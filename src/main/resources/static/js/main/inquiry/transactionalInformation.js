@@ -2,7 +2,7 @@ const tranKeyList = {
 	"tran_date" : "거래일",
 	"tran_time" : "거래시각",
 	"inout_type" : "입출금",
-	"inout_type" : "거래내용",
+	"tran_type" : "거래내용",
 	"print_content" : "통장인자내용",
 	"tran_amt" : "거래금액",
 	"after_balance_amt" : "거래후 잔액",
@@ -214,10 +214,10 @@ function drawTableBody(list,page){
 	
 	const transactionalInformation = list;
 	
-	let startIdx = ((page-1)*20)+1;
+	let startIdx = ((page-1)*18)+1;
 	
-	if(startIdx + 20 < resListCnt){
-		for(let i = startIdx ; i < startIdx+20; i ++){
+	if(startIdx + 18 < resListCnt){
+		for(let i = startIdx ; i < startIdx+18; i ++){
 			const tr = document.createElement('tr');
 			tr.classList='body_tr';
 			for(let key in tranKeyList){
@@ -238,8 +238,19 @@ function drawTableBody(list,page){
 				td.innerText=transactionalInformation[i][key];
 				tr.append(td)
 			}
-			tBody.append(tr);	
-		}	
+			tBody.append(tr);
+		}
+		for(let i=0; i < 18-(resListCnt-startIdx); i++){
+			console.log(i)
+			const tr = document.createElement('tr');
+			tr.classList='body_tr';
+			for(let j = 0; j<8 ; j++){
+				const td = document.createElement('td');
+				td.innerText=''
+				tr.append(td);				
+			}
+			tBody.append(tr);
+		}
 	}
 	
 	tBody.setAttribute('id','t_body');
