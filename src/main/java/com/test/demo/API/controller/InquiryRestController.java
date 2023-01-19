@@ -36,6 +36,9 @@ public class InquiryRestController {
 		/*if(result.get("rsp_code")=="A000") {
 			model.addAttribute("rsp_list",result.get("rsp_list"));
 		}*/
+		
+		model.addAttribute("inquiryType",tokenDTO.getInquiryType());
+		
 		return result;
 	}
 	

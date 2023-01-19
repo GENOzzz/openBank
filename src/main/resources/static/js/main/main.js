@@ -10,8 +10,8 @@ window.addEventListener('DOMContentLoaded',function(){
 	
 	const data = {
 		"code" : code.value,
-		"clientId" : 'd91f8584-0a52-41a9-97a9-0488e3cefeeb',
-		"clientSecret" :'ttt', 
+		"clientId" : 'fa2de212-a26e-4e82-bd37-d5b09bada7c6',
+		"clientSecret" :'ff64bf9b-d5d4-4fd9-9797-7f1f1a68e049', 
 		"redirectUri" :'http://localhost:3000/main',
 		"grantType" : 'authorization_code'
 	}

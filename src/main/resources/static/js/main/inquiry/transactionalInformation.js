@@ -24,6 +24,11 @@ pageButtonContainer.setAttribute("id", "pageButtonContainer");
 function transactionalInquiry(idx, period){
 	const formData = new FormData();
 	
+	const inquiryType = document.getElementById('inquiryType');
+	if(inquiryType != undefined){
+		formData.append('inquiryType',inquiryType.value);
+	}
+	
 	const fintechUseNum = document.getElementById(`fintechUseNum${idx}`);	
 	formData.append('fintechUseNum',fintechUseNum.value);
 	
@@ -70,15 +75,17 @@ function transactionalInquiry(idx, period){
 		
 		/**base Container */
 		const baseContainer = document.createElement('div');
-		baseContainer.classList="w1000 h800 brs1 br5 ";
+		baseContainer.classList="w1000 h800 br5 ";
 		baseContainer.setAttribute('id','baseContainer');
 		
 		/**button Container*/
 		const buttonContainer = document.createElement('div');
-		buttonContainer.classList='w100p h50 brs1 lh50 mt5';
+		buttonContainer.classList='w100p h50 lh50 mt5';
 		
 		const inOutSelect = document.createElement('select');
 		inOutSelect.setAttribute('name','inquiryType');
+		inOutSelect.setAttribute('id','inquiryType');
+		inOutSelect.classList='ml10 select_box';
 		
 		const inquiryTypeOption = {
 			'A' : '전체',
@@ -104,16 +111,45 @@ function transactionalInquiry(idx, period){
 		
 		for(let key in buttonList){
 			const button = document.createElement('button');
+			button.classList='ml10 mt1 term_button';
 			button.innerText=buttonList[key];
 			button.setAttribute('onclick',`transactionalInquiry(${idx},'${key}')`);
 			buttonContainer.append(button);						
 		}
+				
+		const excelTypeOption = {
+			'all' : '전체',
+			'table' : '화면'
+		};
 		
+		const excelSelect = document.createElement('select');
+		excelSelect.setAttribute('name','excelType');
+		excelSelect.setAttribute('id','excelOption');
+		excelSelect.classList='ml550 select_box';
+		for(let key in excelTypeOption){
+			const option = document.createElement('option');
+			option.text = excelTypeOption[key];
+			option.value = key;
+			excelSelect.options.add(option);
+		};
+				
+		buttonContainer.append(excelSelect);
+		
+		transactionList = data.res_list;
+		
+		const json = JSON.stringify(transactionList);		
+		
+		const excelButton = document.createElement('button');
+		excelButton.classList='ml10 mt1 excel_button';
+		excelButton.innerText='Excel';
+		excelButton.setAttribute('onclick',`excelDownload(${json})`);
+		buttonContainer.append(excelButton);
+						
 		baseContainer.append(buttonContainer);
 		
 		/**tran_table Container */
 		const tableContainer = document.createElement('div');
-		tableContainer.classList='w100p h640 mt5 brs1';
+		tableContainer.classList='w100p h640 mt5 ';
 		tableContainer.setAttribute('style','display:flex; justify-content: center;')
 		
 		const tranTable = document.createElement('table');
@@ -143,9 +179,7 @@ function transactionalInquiry(idx, period){
 		tHead.append(headTr);
 		tranTable.append(colGroup);
 		tranTable.append(tHead);
-		
-		transactionList = data.res_list;
-		
+				
 		resListCnt=data.page_record_cnt;
 		
 		const tBody = drawTableBody(transactionList,1);
@@ -158,7 +192,7 @@ function transactionalInquiry(idx, period){
 		
 		/**page Container */
 		const pageContainer = document.createElement('div');
-		pageContainer.classList='w100p h90 brs1 mt5';
+		pageContainer.classList='w100p h90 mt5';
 		pageContainer.setAttribute('style','display:flex; justify-content: center; align-items: center;')
 		
 		pageNum = parseInt(resListCnt/20); 
@@ -175,6 +209,7 @@ function transactionalInquiry(idx, period){
 	    } else {
 	      const button = document.createElement("button");
 	      button.innerText = e;
+	      button.classList="page_move_button";
 	      switch (e) {
 	        case "<<":
 	          button.setAttribute("onclick", `goPage(${1})`);
@@ -222,7 +257,9 @@ function drawTableBody(list,page){
 			tr.classList='body_tr';
 			for(let key in tranKeyList){
 				const td = document.createElement('td');
-				td.classList='body_td';
+				if(key === 'tran_date'){
+					td.classList='date'
+				};
 				td.innerText=transactionalInformation[i][key];
 				tr.append(td)
 			}
@@ -234,19 +271,20 @@ function drawTableBody(list,page){
 			tr.classList='body_tr';
 			for(let key in tranKeyList){
 				const td = document.createElement('td');
-				td.classList='body_td';
+				if(key === 'tran_date'){
+					td.classList='date'
+				};
 				td.innerText=transactionalInformation[i][key];
 				tr.append(td)
 			}
 			tBody.append(tr);
 		}
 		for(let i=0; i < 18-(resListCnt-startIdx); i++){
-			console.log(i)
 			const tr = document.createElement('tr');
 			tr.classList='body_tr';
 			for(let j = 0; j<8 ; j++){
 				const td = document.createElement('td');
-				td.innerText=''
+				td.innerText='-'
 				tr.append(td);				
 			}
 			tBody.append(tr);
@@ -283,7 +321,7 @@ function changePage(nowPage) {
   }
 }
 
-
+/**pageButton */
 function createPageButton(firstIdx, lastIdx) {
 	  
   const pageButtonContainer = document.getElementById("pageButtonContainer");
@@ -294,6 +332,7 @@ function createPageButton(firstIdx, lastIdx) {
   
   for (let i = firstIdx; i <= lastIdx; i++) {
     const button = document.createElement("button");
+    button.classList='page_move_button';
     button.innerText = i;
     button.setAttribute("onclick", `changePage(${i})`);
     const pageButtonContainer = document.getElementById("pageButtonContainer");
@@ -302,6 +341,7 @@ function createPageButton(firstIdx, lastIdx) {
 }
 
 
+/**move page */
 function goPage(page) {
   changePage(page);
 }

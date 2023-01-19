@@ -10,10 +10,12 @@
     
     <script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
     
     <title>오픈뱅킹_VEINX</title>
   </head>
-  <body style="width: 100%; height: 100vh">
+  <body style="width: 100%; height: 100vh; font-family: monospace;">
   	<form id="mainForm" method="post" action="/main/access">
 		<input type="hidden" id="login_id" name="loginId" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.loginId}"/>
 		<input type="hidden" id="login_id" name="loginId" th:if="${session.tokenDTO==null}"/>
@@ -26,17 +28,16 @@
 		<input type="hidden" id="scope" name="scope"/>
 		<input type="hidden" id="user_seq_no" name="userSeqNo" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.userSeqNo}"/>
 		<input type="hidden" id="user_seq_no" name="userSeqNo" th:if="${session.tokenDTO==null}"/>
-		<input type="hidden" id="bank_tran_id" name="bankTranId" th:value="M202300052"/>
+		<input type="hidden" id="bank_tran_id" name="bankTranId" th:value="M202300134"/>
 	</form>
     <div class="base">
       <div class="left container" id="left_container">
       	<div class="mt50 container_child2">
-			<button type="button" onclick="logout()">logout</button>	
+			<button class="logout_button" type="button" onclick="logout()">logout</button>	
 		</div>
       </div>
       <div class="right container" id="right_container">
-        <div class="mt50 container_child" id="table_title" style="font-size: 50px;">TITLE</div>
-        <div class="mt100 container_child2">Excel</div>
+        <div class="mt50 container_child" id="table_title" style="font-size: 50px;">Open Banking</div>
         <div
           class="w1200 h800 mt150 mb100 brs1 br10 container_child"
           id="table"
@@ -47,9 +48,10 @@
     </div>
   </body>
   <script src="/js/main/main.js"></script>
+  <script src="/js/main/excel.js"></script>
   <script src="/js/main/won.js"></script>
   <script src="/js/main/account/list.js"></script>
   <script src="/js/main/account/cancel.js"></script>
-  <script src="/js/main/inquiry/balance.js"></script>
+  <script src="/js/main/inquiry/balance2.js"></script>
   <script src="/js/main/inquiry/transactionalInformation.js"></script>
 </html>

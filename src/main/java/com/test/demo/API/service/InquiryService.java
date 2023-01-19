@@ -119,19 +119,26 @@ Date now = new Date();
 			cal.add(Calendar.YEAR, -10);
 			fromDate = toDateFormat.format(cal.getTime());
 		}
-				
+		
+		String inquiryType="A";
+		if(tokenDTO.getInquiryType()!=null) {
+			inquiryType=tokenDTO.getInquiryType();
+		}
 		
 		final String uri = "https://testapi.openbanking.or.kr/v2.0/account/transaction_list/fin_num?"
 				+ "bank_tran_id="+bankTranId+"&"
 						+ "fintech_use_num="+tokenDTO.getFintechUseNum()+"&"
 								+ "inquiry_base=D&"
-								+ "inquiry_type=A&"
+								+ "inquiry_type="+inquiryType+"&"
 								+ "from_date="+fromDate+"&"
 								+ "from_time=000000&"
 								+ "to_date="+toDate+"&"
 										+ "to_time="+toTime+"&"
 										+ "sort_order=D&"
 										+ "tran_dtime="+dTime;
+		
+		System.out.println(uri);
+		
 		JSONObject jsonObj = null; 																															
 		JSONParser parser = new JSONParser();
 		

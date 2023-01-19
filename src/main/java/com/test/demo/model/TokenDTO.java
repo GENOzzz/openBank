@@ -15,8 +15,8 @@ public class TokenDTO extends LoginDTO{
 	private String expiresIn;
 	private String scope;
 	private String userSeqNo;
-	
 	private String fintechUseNum;
 	private String bankTranId;
 	private String period;
+	private String inquiryType;
 }

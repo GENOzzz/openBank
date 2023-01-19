@@ -35,3 +35,59 @@
   left: 80%;
   transform: translate(-50%);
 }
+
+.account_container{
+	border: solid 1px  #444444;
+	background-color: white;
+	font-weight: 500;
+	color: #444444;
+}
+
+.base_container{
+	background-color: #eaeaed;
+	border: solid 1px #444444;
+}
+
+.action_button{
+	width: 100px;
+	height: 30px;
+	background-color: #eaeaed;
+	border-radius: 5px;
+}
+
+.logout_button{
+	width: 100px;
+	height: 30px;
+	background-color: crimson;
+	color: snow;
+	border-radius: 5px;
+}
+
+.page_move_button{
+	width: 30px;
+	height: 30px;
+	background-color: #444444;
+	color: #eaeaed;
+	border-radius: 5px;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.select_box{
+	width: 100px;
+	height: 30px;
+	background-color: white;
+	border: solid 1px;
+}
+
+.term_button{
+	width: 60px;
+	height: 30px;
+}
+
+.excel_button{
+	width: 60px;
+	height: 30px;
+	background-color: green;
+	color: white;
+}
