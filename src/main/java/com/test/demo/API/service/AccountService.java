@@ -143,7 +143,7 @@ public class AccountService {
 		      sb.append(line).append("\n");
 		      }
 		      br.close();
-		      System.out.println(sb.toString());
+		      //System.out.println(sb.toString());
 		      
 		      Object obj = parser.parse(sb.toString());
 		      jsonObj = (JSONObject)obj;

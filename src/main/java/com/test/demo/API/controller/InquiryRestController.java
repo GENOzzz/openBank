@@ -24,20 +24,19 @@ public class InquiryRestController {
 	@PostMapping("/balance")
 	@ResponseBody
 	private JSONObject inquiryBalance(@ModelAttribute TokenDTO tokenDTO) throws MalformedURLException{
-		System.out.println("===inquiry balance");
+		//System.out.println("===inquiry balance");
 		return inquiryService.inquiryBalance(tokenDTO);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@PostMapping("/transactional")
 	@ResponseBody
 	private JSONObject transactional(Model model,@ModelAttribute TokenDTO tokenDTO) throws MalformedURLException{
-		System.out.println("===inquiry transctional");
-		JSONObject result = inquiryService.transactional(tokenDTO);
-		/*if(result.get("rsp_code")=="A000") {
-			model.addAttribute("rsp_list",result.get("rsp_list"));
-		}*/
+		//System.out.println("===inquiry transctional");
 		
-		model.addAttribute("inquiryType",tokenDTO.getInquiryType());
+		JSONObject result = inquiryService.transactional(tokenDTO);
+		
+		result.put("inquiry_type", tokenDTO.getInquiryType());
 		
 		return result;
 	}

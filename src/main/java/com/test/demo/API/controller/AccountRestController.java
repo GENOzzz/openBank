@@ -41,7 +41,7 @@ public class AccountRestController {
 	@PostMapping("/cancel")
 	@ResponseBody
 	private JSONObject accountCancel(@ModelAttribute TokenDTO tokenDTO) throws MalformedURLException {
-		System.out.println(tokenDTO);
+		
 		JSONObject result = accountService.accountCancel(tokenDTO,"inquiry");
 		
 		if(result.get("rsp_code")=="A000") {

@@ -38,7 +38,7 @@ public class MainController {
 	@GetMapping("")
 	public String main(HttpServletRequest req,HttpSession session,Model model){
         
-		TokenDTO tokenDTO = (TokenDTO) session.getAttribute("tokenDTO");
+		//TokenDTO tokenDTO = (TokenDTO) session.getAttribute("tokenDTO");
 		
 		String code = req.getParameter("code");
        if(code!="") {

@@ -15,7 +15,7 @@ import com.test.demo.token.service.TokenService;
 public class TokenRestController {
 	
 	@Autowired
-	TokenService tokenService;
+	TokenService tokenService;	
 	
 	/**
 	 * @methodName : tokenAccess
@@ -28,10 +28,11 @@ public class TokenRestController {
 	@PostMapping("/access")
 	@ResponseBody
 	public boolean tokenAccess(@ModelAttribute TokenDTO tokenDTO){
-		System.out.println("token access");
-		System.out.println(tokenDTO.toString());
+		//System.out.println("token access");
+		//System.out.println(tokenDTO.toString());
 		tokenDTO.setInputKey(0);
 		tokenService.addToken(tokenDTO);
 		return true;
 	}
+	
 }

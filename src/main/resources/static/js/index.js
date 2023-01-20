@@ -1,3 +1,5 @@
+const code = document.getElementById('code');
+
 function signUp(){
 	
 	const inputId = document.getElementById('id').value
@@ -35,13 +37,13 @@ function signUp(){
 		}else{
 			window.location="https://testapi.openbanking.or.kr/oauth/2.0/authorize?"+
           "response_type=code&"+
-          "client_id=fa2de212-a26e-4e82-bd37-d5b09bada7c6&"+
+          "client_id=220b7f4b-4382-4605-852c-ea7706539651&"+
           "redirect_uri=http://localhost:3000/main&"+
           "scope=login inquiry transfer&"+
-          "state=12345678901234567890123456789012&"+
+          "state=68749843513579843513579321354988&"+		
           "auth_type=0";
 		}
 	})
-	.catch(data=> console.log('fail', data))
+	.catch(data=> console.log('fail', data));
 	
 }

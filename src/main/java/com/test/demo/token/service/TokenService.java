@@ -26,7 +26,7 @@ public class TokenService {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection(dbFileUrl);
-			System.out.println("SQLite DB Connected!");
+			System.out.println("Token DB Connected!");
 			
 			stmt = con.createStatement();
 			
@@ -64,9 +64,8 @@ public class TokenService {
 	}
 	
 	public TokenDTO getToken(LoginDTO loginDTO) {
+		
 		TokenDTO tokenDTO = new TokenDTO();
-		
-		
 		
 		return tokenDTO;
 	}

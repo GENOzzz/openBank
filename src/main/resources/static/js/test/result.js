@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded',function(){
 		"code": code,
 		"client_id": 'd91f8584-0a52-41a9-97a9-0488e3cefeeb',
 		"client_secret":'', 
-		"redirect_uri":'http://localhost:3000/test/result',
+		"redirect_uri":'http://localhost:3000/main',
 		"grant_type":'authorization_code'
 	}
 	

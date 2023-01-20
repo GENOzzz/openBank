@@ -76,7 +76,7 @@ public class InquiryService {
 		      sb.append(line).append("\n");
 		      }
 		      br.close();
-		      System.out.println(sb.toString());
+		      //System.out.println(sb.toString());
 		      
 		      Object obj = parser.parse(sb.toString());
 		      jsonObj = (JSONObject)obj;
@@ -93,7 +93,7 @@ public class InquiryService {
 	}
 
 	public JSONObject transactional(TokenDTO tokenDTO) throws MalformedURLException {
-Date now = new Date();
+		Date now = new Date();
 		
 		SimpleDateFormat tranIdFormat = new SimpleDateFormat("HHmmssSSS");
 		String tranIdTime = tranIdFormat.format(now);
@@ -136,8 +136,6 @@ Date now = new Date();
 										+ "to_time="+toTime+"&"
 										+ "sort_order=D&"
 										+ "tran_dtime="+dTime;
-		
-		System.out.println(uri);
 		
 		JSONObject jsonObj = null; 																															
 		JSONParser parser = new JSONParser();

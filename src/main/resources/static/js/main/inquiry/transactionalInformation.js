@@ -50,7 +50,7 @@ function transactionalInquiry(idx, period){
 	.then(res=>res.json())
 	.then(data=>{
 		if(data.rsp_code!="A0000"){
-			alert(data.rsp_message);
+			alert(`333${data.rsp_message}`);
 			return;
 		};
 		
@@ -92,11 +92,14 @@ function transactionalInquiry(idx, period){
 			'I' : '입급',
 			'O' : '출금'
 		};
-		
+				
 		for(let key in inquiryTypeOption){
 			const option = document.createElement('option');
 			option.text = inquiryTypeOption[key];
 			option.value = key;
+			if(data.inquiry_type === key){
+				option.setAttribute('selected','true');
+			}
 			inOutSelect.options.add(option);
 		}
 		
@@ -147,9 +150,27 @@ function transactionalInquiry(idx, period){
 						
 		baseContainer.append(buttonContainer);
 		
+		/**search container */
+		const searchContainer = document.createElement('div');
+		searchContainer.classList='w100p h40 mt5  brs1'
+		
+		const searchList = ['거래내용','거래점','통장인자내용'];
+		for(let keyword of searchList){
+			const keywordText = document.createElement('div');
+			keywordText.classList='w100 h30';
+			keywordText.setAttribute('style','display:inline-block; justify-content: center;');
+			keywordText.innerText = keyword;
+			searchContainer.append(keywordText);
+			const searchInput = document.createElement('input');
+			searchInput.classList = 'w100 h30';
+			searchContainer.append(searchInput);
+		}
+		
+		baseContainer.append(searchContainer);
+		
 		/**tran_table Container */
 		const tableContainer = document.createElement('div');
-		tableContainer.classList='w100p h640 mt5 ';
+		tableContainer.classList='w100p h640 mt5';
 		tableContainer.setAttribute('style','display:flex; justify-content: center;')
 		
 		const tranTable = document.createElement('table');
@@ -192,7 +213,7 @@ function transactionalInquiry(idx, period){
 		
 		/**page Container */
 		const pageContainer = document.createElement('div');
-		pageContainer.classList='w100p h90 mt5';
+		pageContainer.classList='w100p h50 mt5';
 		pageContainer.setAttribute('style','display:flex; justify-content: center; align-items: center;')
 		
 		pageNum = parseInt(resListCnt/20); 
@@ -248,6 +269,9 @@ function drawTableBody(list,page){
 	const tBody = document.createElement('tbody');
 	
 	const transactionalInformation = list;
+	
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+	console.log(transactionalInformation);
 	
 	let startIdx = ((page-1)*18)+1;
 	

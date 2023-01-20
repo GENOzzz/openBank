@@ -20,7 +20,7 @@ function balanceInquiry2(fintechUseNum, idx){
 	.then(res=>res.json())
 	.then(data=>{
 		if(data.rsp_code!="A0000"){
-			alert(data.rsp_message);
+			alert(`${data.rsp_message}`);
 			return;
 		};
 		
