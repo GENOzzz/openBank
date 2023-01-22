@@ -32,11 +32,12 @@ public class InquiryRestController {
 	@PostMapping("/transactional")
 	@ResponseBody
 	private JSONObject transactional(Model model,@ModelAttribute TokenDTO tokenDTO) throws MalformedURLException{
-		//System.out.println("===inquiry transctional");
-		
+
 		JSONObject result = inquiryService.transactional(tokenDTO);
 		
 		result.put("inquiry_type", tokenDTO.getInquiryType());
+		
+		result.put("period", tokenDTO.getPeriod());
 		
 		return result;
 	}

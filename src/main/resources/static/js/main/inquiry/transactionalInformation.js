@@ -6,7 +6,8 @@ const tranKeyList = {
 	"print_content" : "통장인자내용",
 	"tran_amt" : "거래금액",
 	"after_balance_amt" : "거래후 잔액",
-	"branch_name" : "거래점"};
+	"branch_name" : "거래점"
+	};
 
 let resListCnt =0; //거래 카운트
 
@@ -111,13 +112,18 @@ function transactionalInquiry(idx, period){
 			'90': "3개월",
 			'180': "6개월",
 			'all' : "전체"};
+			
+		const period = data.period;
 		
 		for(let key in buttonList){
 			const button = document.createElement('button');
 			button.classList='ml10 mt1 term_button';
 			button.innerText=buttonList[key];
 			button.setAttribute('onclick',`transactionalInquiry(${idx},'${key}')`);
-			buttonContainer.append(button);						
+			if(key == period){
+				button.setAttribute('style','background:#A4A4A4;border-radius:3px;');
+			}
+			buttonContainer.append(button);
 		}
 				
 		const excelTypeOption = {
@@ -153,19 +159,68 @@ function transactionalInquiry(idx, period){
 		/**search container */
 		const searchContainer = document.createElement('div');
 		searchContainer.classList='w100p h40 mt5  brs1'
+		searchContainer.setAttribute('style','display: flex; flex-direction: row; justify-content: start;');
 		
-		const searchList = ['거래내용','거래점','통장인자내용'];
+		const searchList = ['거래내용','거래점','통장인자내용','검색'];
+		
+		const searchTable = document.createElement('table');
+		searchTable.classList='search_table';
+		
+		const searchColGroup = document.createElement('colgroup');
+		
+		for(i=0;i<8;i++){
+			const col = document.createElement('col');
+			col.setAttribute('width','10%');
+			searchColGroup.append(col);
+		};
+		
+		searchTable.append(searchColGroup);
+		
+		const searchTBody = document.createElement('tbody');
+		const searchTr = document.createElement('tr');
+		searchTr.classList='body_tr';
+		
 		for(let keyword of searchList){
-			const keywordText = document.createElement('div');
-			keywordText.classList='w100 h30';
-			keywordText.setAttribute('style','display:inline-block; justify-content: center;');
-			keywordText.innerText = keyword;
-			searchContainer.append(keywordText);
-			const searchInput = document.createElement('input');
-			searchInput.classList = 'w100 h30';
-			searchContainer.append(searchInput);
+			const td = document.createElement('td');
+			if(keyword!='검색'){
+				td.innerText=keyword;
+				searchTr.append(td);
+				
+				const inputTd = document.createElement('td');
+				const input = document.createElement('input');
+				input.classList='w90p h30';
+				
+				switch (keyword) {
+			        case '거래내용':
+			          input.setAttribute("id", 'tran_type');
+			          break;
+			        case '거래점':
+			          input.setAttribute("id", 'branch_name');
+			          break;
+			        case '통장인자내용':
+			       	  input.setAttribute("id", 'print_content');
+			          break;
+			   	}
+				
+				inputTd.append(input);
+				searchTr.append(inputTd);				
+			}else{
+				td.innerText='-';
+				searchTr.append(td);
+				
+				const buttonTd = document.createElement('td');
+				const button = document.createElement('button');
+				button.classList = 'action_button';
+				button.setAttribute('onclick',`changePage(${nowPageNum})`);
+				button.innerText=keyword;
+				buttonTd.append(button);
+				searchTr.append(buttonTd);
+			}
 		}
-		
+			
+		searchTBody.append(searchTr);
+		searchTable.append(searchTBody);
+		searchContainer.append(searchTable);		
 		baseContainer.append(searchContainer);
 		
 		/**tran_table Container */
@@ -178,27 +233,27 @@ function transactionalInquiry(idx, period){
 		tranTable.setAttribute('id', 'tran_table');
 		
 		/**table_base */
-		const colGroup = document.createElement('colgroup');
+		const tranColGroup = document.createElement('colgroup');
 		
 		const tHead = document.createElement('thead');
 		const headTr = document.createElement('tr');
-		headTr.classList='head_tr';
+		headTr.classList='tran_head_tr';
 		
 		for(let i in tranKeyList){
 			
 			const col = document.createElement('col');
 			col.setAttribute('width','10%');
-			colGroup.append(col);
+			tranColGroup.append(col);
 			
 			const th = document.createElement('th');
-			th.classList='head_th';
+			th.classList='tran_head_th';
 			th.setAttribute('scope','col');
 			th.innerText=tranKeyList[i];
 			headTr.append(th);
 		};
 
 		tHead.append(headTr);
-		tranTable.append(colGroup);
+		tranTable.append(tranColGroup);
 		tranTable.append(tHead);
 				
 		resListCnt=data.page_record_cnt;
@@ -266,19 +321,33 @@ function transactionalInquiry(idx, period){
 
 /**table_body transactionlInformation */
 function drawTableBody(list,page){
+	
+	const searchKeyword = {
+		"branch_name" : document.getElementById('branch_name')?.value,
+		"tran_type" : document.getElementById('tran_type')?.value,
+		"print_content" : document.getElementById('print_content')?.value,
+	};
+	
 	const tBody = document.createElement('tbody');
 	
 	const transactionalInformation = list;
 	
-	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-	console.log(transactionalInformation);
-	
+	if((searchKeyword.branch_name!=undefined && searchKeyword.branch_name!='')
+	|| (searchKeyword.tran_type!=undefined && searchKeyword.tran_type!='')
+	|| (searchKeyword.print_content!=undefined && searchKeyword.print_content!='')){
+		
+		transactionalInformation.forEach((e)=>{
+			console.log(e);
+		})
+		
+	}
+			
 	let startIdx = ((page-1)*18)+1;
 	
 	if(startIdx + 18 < resListCnt){
 		for(let i = startIdx ; i < startIdx+18; i ++){
 			const tr = document.createElement('tr');
-			tr.classList='body_tr';
+			tr.classList='tran_body_tr';
 			for(let key in tranKeyList){
 				const td = document.createElement('td');
 				if(key === 'tran_date'){
@@ -292,7 +361,7 @@ function drawTableBody(list,page){
 	}else{
 		for(let i = startIdx ; i < resListCnt; i ++){
 			const tr = document.createElement('tr');
-			tr.classList='body_tr';
+			tr.classList='tran_body_tr';
 			for(let key in tranKeyList){
 				const td = document.createElement('td');
 				if(key === 'tran_date'){
@@ -305,7 +374,7 @@ function drawTableBody(list,page){
 		}
 		for(let i=0; i < 18-(resListCnt-startIdx); i++){
 			const tr = document.createElement('tr');
-			tr.classList='body_tr';
+			tr.classList='tran_body_tr';
 			for(let j = 0; j<8 ; j++){
 				const td = document.createElement('td');
 				td.innerText='-'

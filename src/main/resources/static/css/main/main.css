@@ -49,10 +49,14 @@
 }
 
 .action_button{
-	width: 100px;
+	width: 105px;
 	height: 30px;
 	background-color: #eaeaed;
 	border-radius: 5px;
+}
+
+.action_button:hover{
+	background-color: #A4A4A4;
 }
 
 .logout_button{
@@ -61,6 +65,10 @@
 	background-color: crimson;
 	color: snow;
 	border-radius: 5px;
+}
+
+.logout_button:hover{
+	background-color: rgb(162, 15, 45);
 }
 
 .page_move_button{

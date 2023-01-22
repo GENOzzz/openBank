@@ -26,3 +26,7 @@
   color: blanchedalmond;
   font-size: 30px;
 }
+
+.sign_button:hover{
+	background-color: darkgrey;
+}
