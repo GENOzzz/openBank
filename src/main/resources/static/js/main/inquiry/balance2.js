@@ -1,9 +1,7 @@
 function balanceInquiry2(fintechUseNum, idx){
 	const formData = new FormData();
 	
-	console.log(fintechUseNum);
-	
-	//const fintechUseNum = document.getElementById(`fintechUseNum${idx}`);	
+	//const fintechUseNum = document.getElementById(`fintechUseNum${idx}`);
 	formData.append('fintechUseNum',fintechUseNum);
 	
 	const bankTranId = document.getElementById('bank_tran_id');

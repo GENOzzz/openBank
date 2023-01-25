@@ -112,14 +112,17 @@ public class InquiryService {
 		cal.setTime(now);
 		String fromDate ;
 		
+		cal.add(Calendar.YEAR, -10);
+		fromDate = toDateFormat.format(cal.getTime());
+		
 		//기간 기준 10년
-		if(!tokenDTO.getPeriod().equals("all") && !tokenDTO.getPeriod().equals("undefined") && tokenDTO.getPeriod()!=null) {
+		/*if(!tokenDTO.getPeriod().equals("all") && !tokenDTO.getPeriod().equals("undefined") && tokenDTO.getPeriod()!=null) {
 			cal.add(Calendar.DATE, -Integer.parseInt(tokenDTO.getPeriod()));
 			fromDate = toDateFormat.format(cal.getTime());
 		}else {
 			cal.add(Calendar.YEAR, -10);
 			fromDate = toDateFormat.format(cal.getTime());
-		}
+		}*/
 		
 		String inquiryType="A";
 		if(tokenDTO.getInquiryType()!=null) {

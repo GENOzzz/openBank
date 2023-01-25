@@ -51,182 +51,33 @@ function transactionalInquiry(idx){
 	.then(res=>res.json())
 	.then(data=>{
 		if(data.rsp_code!="A0000"){
-			alert(`333${data.rsp_message}`);
+			alert(`잔액조회 오류\n ${data.rsp_message}`);
 			return;
 		};
 		
 		console.log(data);
+		
+		transactionList = data.res_list;
 		
 		/*for(let key in data){
 			console.log('key',key)
 			console.log('value',data[key])
 		}*/
 		
-		/**table */
-		const table = document.getElementById('table');
-		
+		/**table title*/
 		const tableTitle = document.getElementById('table_title');
 		
 		tableTitle.innerText = `${data.bank_name}`;
-
-		if(table.firstElementChild){
-			let baseContainer = table.firstElementChild;
-			table.removeChild(baseContainer);
-		}
 		
-		/**base Container */
-		const baseContainer = document.getElementById('baseContainer');
-		
-		/**button Container*/
-		const buttonContainer = document.getElementById('buttonContainer');
-		
-		console.log(buttonContainer);
-		
-		const inOutSelect = document.createElement('select');
-		inOutSelect.setAttribute('name','inquiryType');
-		inOutSelect.setAttribute('id','inquiryType');
-		inOutSelect.setAttribute('onchange','selectInOut()');
-		inOutSelect.classList='ml10 select_box';
-		
-		const inquiryTypeOption = {
-			'A' : '전체',
-			'I' : '입급',
-			'O' : '출금'
-		};
-				
-		for(let key in inquiryTypeOption){
-			const option = document.createElement('option');
-			option.text = inquiryTypeOption[key];
-			option.value = key;
-			if(data.inquiry_type === key){
-				option.setAttribute('selected','true');
-			}
-			inOutSelect.options.add(option);
-		}
-		
-		buttonContainer.append(inOutSelect);
-		
-		const buttonList={
-			'7': "1주일",
-			'30':"1개월",
-			'90': "3개월",
-			'180': "6개월",
-			'all' : "전체"};
-			
-		const period = data.period;
-		
-		for(let key in buttonList){
-			const button = document.createElement('button');
-			button.classList='ml10 mt1 term_button';
-			button.innerText=buttonList[key];
-			button.setAttribute('onclick',`transactionalInquiry(${idx},'${key}')`);
-			if(key == period){
-				button.setAttribute('style','background:#A4A4A4;border-radius:3px;');
-			}
-			buttonContainer.append(button);
-		}
-				
-		const excelTypeOption = {
-			'all' : '전체',
-			'table' : '화면'
-		};
-		
-		const excelSelect = document.createElement('select');
-		excelSelect.setAttribute('name','excelType');
-		excelSelect.setAttribute('id','excelOption');
-		excelSelect.classList='ml550 select_box';
-		for(let key in excelTypeOption){
-			const option = document.createElement('option');
-			option.text = excelTypeOption[key];
-			option.value = key;
-			excelSelect.options.add(option);
-		};
-				
-		buttonContainer.append(excelSelect);
-		
-		transactionList = data.res_list;
-		
-		const json = JSON.stringify(transactionList);		
-		
-		const excelButton = document.createElement('button');
-		excelButton.classList='ml10 mt1 excel_button';
-		excelButton.innerText='Excel';
-		excelButton.setAttribute('onclick',`excelDownload(${json})`);
-		buttonContainer.append(excelButton);
-						
-		baseContainer.append(buttonContainer);
-		
-		/**search container */
-		const searchContainer = document.getElementById('searchContainer');
-		
-		const searchList = ['거래내용','통장인자내용','거래점','검색'];
-		
-		const searchTable = document.createElement('table');
-		searchTable.classList='search_table';
-		
-		const searchColGroup = document.createElement('colgroup');
-		
-		for(i=0;i<8;i++){
-			const col = document.createElement('col');
-			col.setAttribute('width','10%');
-			searchColGroup.append(col);
-		};
-		
-		searchTable.append(searchColGroup);
-		
-		const searchTBody = document.createElement('tbody');
-		const searchTr = document.createElement('tr');
-		searchTr.classList='body_tr';
-		
-		for(let keyword of searchList){
-			const td = document.createElement('td');
-			if(keyword!='검색'){
-				td.innerText=keyword;
-				searchTr.append(td);
-				
-				const inputTd = document.createElement('td');
-				const input = document.createElement('input');
-				input.classList='w90p h30';
-				
-				switch (keyword) {
-			        case '거래내용':
-			          input.setAttribute("id", 'tran_type');
-			          break;
-			        case '통장인자내용':
-			       	  input.setAttribute("id", 'print_content');
-			          break;
-			        case '거래점':
-			          input.setAttribute("id", 'branch_name');
-			          break;
-			   	}
-				
-				inputTd.append(input);
-				searchTr.append(inputTd);				
-			}else{
-				const button = document.createElement('button');
-				button.classList = 'action_button';
-				button.setAttribute('onclick',`changePage(${nowPageNum})`);
-				button.innerText=keyword;
-				td.append(button);
-				searchTr.append(td);
-				
-				const buttonTd = document.createElement('td');
-				const cleanButton = document.createElement('button');
-				cleanButton.classList = 'action_button';
-				cleanButton.setAttribute('onclick',`cleanSearch()`);
-				cleanButton.innerText = '초기화';
-				buttonTd.append(cleanButton);
-				searchTr.append(buttonTd);
-			}
-		}
-			
-		searchTBody.append(searchTr);
-		searchTable.append(searchTBody);
-		searchContainer.append(searchTable);		
-		baseContainer.append(searchContainer);
-		
-		/**tran_table Container */
 		const tableContainer = document.getElementById('tableContainer');
+		
+		if(tableContainer.hasChildNodes()){
+			tableContainer.removeChild(tableContainer.firstChild);
+		}
+		/*if(tableContainer.firstElementChild){
+			let tranTable = table.firstElementChild;
+			tableContainer.removeChild(tranTable);
+		}*/
 		
 		const tranTable = document.createElement('table');
 		tranTable.classList='tran_table';
@@ -262,59 +113,9 @@ function transactionalInquiry(idx){
 		
 		tranTable.append(tBody);
 		
-		tableContainer.append(tranTable)
+		tableContainer.append(tranTable);
 		
-		baseContainer.append(tableContainer);
-		
-		/**page Container */
-		const pageContainer = document.getElementById('pageContainer');
-		
-		pageNum = parseInt(resListCnt/20); 
-		const pageRemainder = resListCnt%20;
-		
-		if(pageRemainder != 0){
-			pageNum = pageNum + 1;
-		};
-			  	
-		const pageMoveButtonList = ["<<", "<", "pageButtonContainer", ">", ">>"];
-		pageMoveButtonList.forEach((e) => {
-	    if (e === "pageButtonContainer") {
-	      pageContainer.append(pageButtonContainer);
-	    } else {
-	      const button = document.createElement("button");
-	      button.innerText = e;
-	      button.classList="page_move_button";
-	      switch (e) {
-	        case "<<":
-	          button.setAttribute("onclick", `goPage(${1})`);
-	          break;
-	        case ">>":
-				button.setAttribute('id','lastPageButton');
-	          button.setAttribute("onclick", `goPage(${pageNum})`);
-	          break;
-	        case "<":
-	          button.setAttribute("onclick", `prevPage()`);
-	          break;
-	        case ">":
-	          button.setAttribute("onclick", `nextPage()`);
-	          break;
-	      }
-	      pageContainer.append(button);
-	    } 
-	  });
-				
-		baseContainer.append(pageContainer);
-		
-		table.append(baseContainer);
-		
-		})
-	.then(()=>{
-		if(pageNum >= 5){
-	  		createPageButton(1, 5);
-	  	}else{
-			createPageButton(1,pageNum);
-	  	}
-	  })
+	})
 	.catch(data=>console.log('error',data));
 }
 
@@ -395,7 +196,9 @@ function drawTableBody(list,page){
 	}
 	
 	tBody.setAttribute('id','t_body');
-
+	
+	createPageButton(1,pageNum)
+	
 	return tBody;
 }
 
@@ -426,14 +229,14 @@ function changePage(nowPage) {
 }
 
 /**pageButton */
-function createPageButton(firstIdx, lastIdx) {
+function createPageButton(firstPage, lastPage) {
   const pageButtonContainer = document.getElementById("pageButtonContainer");
   
   while (pageButtonContainer.hasChildNodes()) {
     pageButtonContainer.removeChild(pageButtonContainer.firstChild);
   }
   
-  for (let i = firstIdx; i <= lastIdx; i++) {
+  for (let i = firstPage; i <= lastPage; i++) {
     const button = document.createElement("button");
     button.classList='page_move_button';
     button.innerText = i;
