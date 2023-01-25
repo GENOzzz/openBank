@@ -43,6 +43,62 @@
           id="table"
           style="background-color: white; color: black;"
           >
+          <div id="baseContainer" class="w100p h800 br5">
+			 <div id="buttonContainer" class="w100p h50 lh50 mt5 button_container">
+				 <select id="inquiryType" class="ml10 select_box" name="inquiryType" onchange="selectInOut()">
+					 <option>전체</option>
+					 <option>입급</option>
+					 <option>출금</option>
+				 </select>
+				 <button class="ml10 mt1 term_button">1주일</button>
+				 <button class="ml10 mt1 term_button">1개월</button>
+				 <button class="ml10 mt1 term_button">3개월</button>
+				 <button class="ml10 mt1 term_button">6개월</button>
+				 <button class="ml10 mt1 term_button selected">전체</button>
+				 
+				 <select id="excelOption" class="ml550 select_box">
+					 <option>전체</option>
+					 <option>화면</option>
+				 </select>
+				 <button class="ml10 mt1 excel_button">Excel</button>				 
+			 </div>
+			 <div id="searchContainer" class="w100p h40 mt3 search_container">
+				 <table id="searchTable" class="search_table">
+					 <colgroup>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 </colgroup>
+					 <tbody>
+						 <tr class="body_tr">
+							 <td>거래내용</td>
+							 <td><input class="w90p h30"/></td>
+							 <td>통장인자내용</td>
+							 <td><input class="w90p h30"/></td>
+							 <td>거래점</td>
+							 <td><input class="w90p h30"/></td>
+							 <td><button class="action_button">검색</button></td>
+							 <td><button class="action_button">초기화</button></td>
+						 </tr>
+					 </tbody>
+				 </table>
+			 </div>
+			 <div id="tableContainer" class="w100p h640 mt5 brs1 table_container">
+				 
+			 </div>
+			 <div id="pageContainer" class="w100p h50 mt5 page_container">
+				 <button class="page_move_button"><<</button>
+				 <button class="page_move_button"><</button>
+				 <div id="pageButtonContainer"></div>
+				 <button class="page_move_button">></button>
+				 <button class="page_move_button">>></button>
+			 </div>
+		  </div>
         </div>
       </div>
     </div>
@@ -53,5 +109,5 @@
   <script src="/js/main/account/list.js"></script>
   <script src="/js/main/account/cancel.js"></script>
   <script src="/js/main/inquiry/balance2.js"></script>
-  <script src="/js/main/inquiry/transactionalInformation.js"></script>
+  <script src="/js/main/inquiry/transactionalInformation2.js"></script>
 </html>

@@ -1,6 +1,8 @@
 function balanceInquiry2(fintechUseNum, idx){
 	const formData = new FormData();
 	
+	console.log(fintechUseNum);
+	
 	//const fintechUseNum = document.getElementById(`fintechUseNum${idx}`);	
 	formData.append('fintechUseNum',fintechUseNum);
 	
@@ -13,7 +15,7 @@ function balanceInquiry2(fintechUseNum, idx){
 	const userSeqNo = document.getElementById('user_seq_no');
 	formData.append('userSeqNo',userSeqNo.value);
 	
-	fetch("http://localhost:3000/inquiry/balance",{
+	fetch("/inquiry/balance",{
 		method:'post',
 		body:formData
 	})

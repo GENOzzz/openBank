@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded',function(){
 		const codeData = new FormData();
 		codeData.append('code',code.value);
 		
-	    fetch("http://localhost:3000/token/issue",{
+	    fetch("/token/issue",{
 			method:'POST',
 			body:codeData
 		})
@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded',function(){
 			console.log(formData)
 			
 			if(access_token.value != undefined){
-				fetch("http://localhost:3000/token/access",{
+				fetch("/token/access",{
 					method:'POST',
 					cache:'no-cache',
 					body:formData
@@ -48,10 +48,10 @@ window.addEventListener('DOMContentLoaded',function(){
 				.then(data=>{
 					console.log('success2',data);
 					alert('계좌 등록이 완료 되었습니다.\n 다시 로그인 하여주십시오.')
-					window.location="http://localhost:3000";
+					window.location="/";
 					if(data == false){
 						alert('wrong data...')
-						window.location='http://localhost:3000/login/logout';
+						window.location='/login/logout';
 					}
 					})
 				.catch(data=>console.log('fail',data))
@@ -63,7 +63,7 @@ window.addEventListener('DOMContentLoaded',function(){
 	}else{
 		if(!access_token.value){
 			alert('로그인이 필요합니다.')
-			window.location="http://localhost:3000";
+			window.location="/";
 		}
 	}
 	
@@ -73,5 +73,5 @@ window.addEventListener('DOMContentLoaded',function(){
 });
 
 function logout(){
-	window.location="http://localhost:3000/login/logout"	
+	window.location="/login/logout"	;
 }

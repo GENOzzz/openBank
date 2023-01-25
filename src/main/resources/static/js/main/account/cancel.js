@@ -15,9 +15,9 @@ function accountCancel(idx){
 			const userSeqNo = document.getElementById('user_seq_no');
 			formData.append('userSeqNo',userSeqNo.value);
 						
-			console.log(formData)
+			//console.log(formData)
 		
-			fetch("http://localhost:3000/account/cancel",{
+			fetch("/account/cancel",{
 				method:'post',
 				body:formData
 			})

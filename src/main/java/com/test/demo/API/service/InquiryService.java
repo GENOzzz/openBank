@@ -100,18 +100,19 @@ public class InquiryService {
 		final String bankTranId = tokenDTO.getBankTranId()+"U"+tranIdTime; //이용기관코드
 		
 		SimpleDateFormat tranDtimeFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		String dTime = tranDtimeFormat.format(now);
+		String dTime = tranDtimeFormat.format(now); //요청일시
 		
 		SimpleDateFormat toDateFormat = new SimpleDateFormat("yyyyMMdd");
-		String toDate = toDateFormat.format(now);
+		String toDate = toDateFormat.format(now); //오늘
 		
 		SimpleDateFormat toTimeFormat = new SimpleDateFormat("HHmmss");
-		String toTime = toTimeFormat.format(now);
+		String toTime = toTimeFormat.format(now); //현재시간
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(now);
 		String fromDate ;
 		
+		//기간 기준 10년
 		if(!tokenDTO.getPeriod().equals("all") && !tokenDTO.getPeriod().equals("undefined") && tokenDTO.getPeriod()!=null) {
 			cal.add(Calendar.DATE, -Integer.parseInt(tokenDTO.getPeriod()));
 			fromDate = toDateFormat.format(cal.getTime());

@@ -22,13 +22,13 @@ let transactionList;//거래 내역 리스트
 const pageButtonContainer = document.createElement("div");
 pageButtonContainer.setAttribute("id", "pageButtonContainer");
 
-function transactionalInquiry(idx, period){
+function transactionalInquiry(idx){
 	const formData = new FormData();
 	
-	const inquiryType = document.getElementById('inquiryType');
+	/*const inquiryType = document.getElementById('inquiryType');
 	if(inquiryType != undefined){
 		formData.append('inquiryType',inquiryType.value);
-	}
+	}*/ //
 	
 	const fintechUseNum = document.getElementById(`fintechUseNum${idx}`);	
 	formData.append('fintechUseNum',fintechUseNum.value);
@@ -42,7 +42,7 @@ function transactionalInquiry(idx, period){
 	const userSeqNo = document.getElementById('user_seq_no');
 	formData.append('userSeqNo',userSeqNo.value); 
 	
-	formData.append('period',period);
+	/*formData.append('period',period);*/ //기간
 	
 	fetch("/inquiry/transactional",{
 		method:'post',
@@ -75,13 +75,12 @@ function transactionalInquiry(idx, period){
 		}
 		
 		/**base Container */
-		const baseContainer = document.createElement('div');
-		baseContainer.classList="w1000 h800 br5 ";
-		baseContainer.setAttribute('id','baseContainer');
+		const baseContainer = document.getElementById('baseContainer');
 		
 		/**button Container*/
-		const buttonContainer = document.createElement('div');
-		buttonContainer.classList='w100p h50 lh50 mt5';
+		const buttonContainer = document.getElementById('buttonContainer');
+		
+		console.log(buttonContainer);
 		
 		const inOutSelect = document.createElement('select');
 		inOutSelect.setAttribute('name','inquiryType');
@@ -158,9 +157,7 @@ function transactionalInquiry(idx, period){
 		baseContainer.append(buttonContainer);
 		
 		/**search container */
-		const searchContainer = document.createElement('div');
-		searchContainer.classList='w100p h40 mt3'
-		searchContainer.setAttribute('style','display: flex; flex-direction: row; justify-content: start;');
+		const searchContainer = document.getElementById('searchContainer');
 		
 		const searchList = ['거래내용','통장인자내용','거래점','검색'];
 		
@@ -229,9 +226,7 @@ function transactionalInquiry(idx, period){
 		baseContainer.append(searchContainer);
 		
 		/**tran_table Container */
-		const tableContainer = document.createElement('div');
-		tableContainer.classList='w100p h640 mt5';
-		tableContainer.setAttribute('style','display:flex; justify-content: center;')
+		const tableContainer = document.getElementById('tableContainer');
 		
 		const tranTable = document.createElement('table');
 		tranTable.classList='tran_table';
@@ -272,10 +267,7 @@ function transactionalInquiry(idx, period){
 		baseContainer.append(tableContainer);
 		
 		/**page Container */
-		const pageContainer = document.createElement('div');
-		pageContainer.classList='w100p h50 mt5';
-		pageContainer.setAttribute('id', 'pageContainer');
-		pageContainer.setAttribute('style','display:flex; justify-content: center; align-items: center;')
+		const pageContainer = document.getElementById('pageContainer');
 		
 		pageNum = parseInt(resListCnt/20); 
 		const pageRemainder = resListCnt%20;

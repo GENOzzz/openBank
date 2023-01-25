@@ -13,7 +13,7 @@ function balanceInquiry(idx){
 	const userSeqNo = document.getElementById('user_seq_no');
 	formData.append('userSeqNo',userSeqNo.value);
 	
-	fetch("http://localhost:3000/inquiry/balance",{
+	fetch("/inquiry/balance",{
 		method:'post',
 		body:formData
 	})

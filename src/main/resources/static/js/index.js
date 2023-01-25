@@ -17,7 +17,7 @@ function signUp(){
 	
 	const formData = new FormData(document.getElementById('loginForm'));
 
-	fetch("http://localhost:3000/login/do",{
+	fetch("/login/do",{
 		method:'POST',
 		body:formData
 	})
@@ -30,7 +30,7 @@ function signUp(){
 		}
 		if(tokenDTO.accessToken){
 			
-			const signCancelUri = 'http://localhost:3000/main'
+			const signCancelUri = '/main/2'
 			
 			window.location=signCancelUri;
 			
@@ -38,7 +38,7 @@ function signUp(){
 			window.location="https://testapi.openbanking.or.kr/oauth/2.0/authorize?"+
           "response_type=code&"+
           "client_id=220b7f4b-4382-4605-852c-ea7706539651&"+
-          "redirect_uri=http://localhost:3000/main&"+
+          "redirect_uri="+window.location.host+"/main&"+
           "scope=login inquiry transfer&"+
           "state=68749843513579843513579321354988&"+		
           "auth_type=0";

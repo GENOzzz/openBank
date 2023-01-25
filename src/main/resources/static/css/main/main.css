@@ -48,6 +48,28 @@
 	border: solid 1px #444444;
 }
 
+.button_container{
+	display: flex;
+	align-items: center;
+}
+
+.search_container{
+	display: flex; 
+	flex-direction: row; 
+	justify-content: start;
+}
+
+.table_container{
+	display:flex; 
+	justify-content: center;
+}
+
+.page_container{
+	display:flex; 
+	justify-content: center; 
+	align-items: center;
+}
+
 .action_button{
 	width: 105px;
 	height: 30px;
@@ -98,4 +120,10 @@
 	height: 30px;
 	background-color: green;
 	color: white;
+}
+
+.selected{
+	background:#A4A4A4;
+	border: solid 1px;
+	border-radius:3px;
 }

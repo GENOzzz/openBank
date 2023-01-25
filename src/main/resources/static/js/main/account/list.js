@@ -2,9 +2,9 @@
 function accountList(){
 	const formData = new FormData(document.getElementById('mainForm'));
 				
-	console.log(formData)
+	//console.log(formData)
 
-	fetch("http://localhost:3000/account/list",{
+	fetch("/account/list",{
 		method:'post',
 		body:formData
 	})
@@ -74,7 +74,7 @@ function accountList(){
 			balanceContainer.classList='h30 mt5 ml5 mr5 lh30 fts15';
 			balanceContainer.setAttribute('id',`balance${idx}`);
 			
-			balanceContainer.addEventListener('DOMContentLoaded',balanceInquiry2(account.fintech_use_num, idx)) ;
+			//balanceContainer.addEventListener('DOMContentLoaded',balanceInquiry2(account.fintech_use_num, idx)) ;
 			
 			accountContainer.appendChild(balanceContainer);
 		
@@ -87,6 +87,12 @@ function accountList(){
 			balanceInquiryButton.innerText='잔액 조회';
 			balanceInquiryButton.setAttribute('onclick',`balanceInquiry(${idx})`)
 			buttonContainer.appendChild(balanceInquiryButton);*/
+
+			const balanceInquiryButton = document.createElement('button');
+			balanceInquiryButton.classList='action_button';
+			balanceInquiryButton.innerText='잔액조회';
+			balanceInquiryButton.setAttribute('onclick',`balanceInquiry2('${account.fintech_use_num}', ${idx})`)
+			buttonContainer.appendChild(balanceInquiryButton);
 			
 			const transactionalInquiryButton = document.createElement('button');
 			transactionalInquiryButton.classList='action_button';
@@ -100,10 +106,6 @@ function accountList(){
 			accountCancelButton.setAttribute('onclick',`accountCancel(${idx})`);
 			buttonContainer.appendChild(accountCancelButton);
 			
-			/*const test2InquiryButton = document.createElement('button');
-			test2InquiryButton.classList='action_button';
-			test2InquiryButton.innerText='test';
-			buttonContainer.appendChild(test2InquiryButton);*/
 			
 			accountContainer.appendChild(buttonContainer);
 			
