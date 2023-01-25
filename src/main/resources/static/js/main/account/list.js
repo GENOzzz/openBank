@@ -21,7 +21,7 @@ function accountList(){
 		
 		const accountList = data.res_list;
 		
-		const reftContainer = document.getElementById('left_container');
+		const leftContainer = document.getElementById('left_container');
 				
 		(async ()=>{
 		 for(let idx in accountList){
@@ -100,16 +100,16 @@ function accountList(){
 			accountCancelButton.setAttribute('onclick',`accountCancel(${idx})`);
 			buttonContainer.appendChild(accountCancelButton);
 			
-			const test2InquiryButton = document.createElement('button');
+			/*const test2InquiryButton = document.createElement('button');
 			test2InquiryButton.classList='action_button';
 			test2InquiryButton.innerText='test';
-			buttonContainer.appendChild(test2InquiryButton);
+			buttonContainer.appendChild(test2InquiryButton);*/
 			
 			accountContainer.appendChild(buttonContainer);
 			
 			baseContiner.append(accountContainer);
 			
-			reftContainer.appendChild(baseContiner);
+			leftContainer.appendChild(baseContiner);
 			await sleep(20);
 			}
 		})();

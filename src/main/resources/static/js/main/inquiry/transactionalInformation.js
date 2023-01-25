@@ -158,10 +158,10 @@ function transactionalInquiry(idx, period){
 		
 		/**search container */
 		const searchContainer = document.createElement('div');
-		searchContainer.classList='w100p h40 mt5  brs1'
+		searchContainer.classList='w100p h40 mt3'
 		searchContainer.setAttribute('style','display: flex; flex-direction: row; justify-content: start;');
 		
-		const searchList = ['거래내용','거래점','통장인자내용','검색'];
+		const searchList = ['거래내용','통장인자내용','거래점','검색'];
 		
 		const searchTable = document.createElement('table');
 		searchTable.classList='search_table';
@@ -194,26 +194,30 @@ function transactionalInquiry(idx, period){
 			        case '거래내용':
 			          input.setAttribute("id", 'tran_type');
 			          break;
-			        case '거래점':
-			          input.setAttribute("id", 'branch_name');
-			          break;
 			        case '통장인자내용':
 			       	  input.setAttribute("id", 'print_content');
+			          break;
+			        case '거래점':
+			          input.setAttribute("id", 'branch_name');
 			          break;
 			   	}
 				
 				inputTd.append(input);
 				searchTr.append(inputTd);				
 			}else{
-				td.innerText='-';
-				searchTr.append(td);
-				
-				const buttonTd = document.createElement('td');
 				const button = document.createElement('button');
 				button.classList = 'action_button';
 				button.setAttribute('onclick',`changePage(${nowPageNum})`);
 				button.innerText=keyword;
-				buttonTd.append(button);
+				td.append(button);
+				searchTr.append(td);
+				
+				const buttonTd = document.createElement('td');
+				const cleanButton = document.createElement('button');
+				cleanButton.classList = 'action_button';
+				cleanButton.setAttribute('onclick',`cleanSearch()`);
+				cleanButton.innerText = '초기화';
+				buttonTd.append(cleanButton);
 				searchTr.append(buttonTd);
 			}
 		}
@@ -269,6 +273,7 @@ function transactionalInquiry(idx, period){
 		/**page Container */
 		const pageContainer = document.createElement('div');
 		pageContainer.classList='w100p h50 mt5';
+		pageContainer.setAttribute('id', 'pageContainer');
 		pageContainer.setAttribute('style','display:flex; justify-content: center; align-items: center;')
 		
 		pageNum = parseInt(resListCnt/20); 
@@ -277,7 +282,7 @@ function transactionalInquiry(idx, period){
 		if(pageRemainder != 0){
 			pageNum = pageNum + 1;
 		};
-		
+			  	
 		const pageMoveButtonList = ["<<", "<", "pageButtonContainer", ">", ">>"];
 		pageMoveButtonList.forEach((e) => {
 	    if (e === "pageButtonContainer") {
@@ -291,6 +296,7 @@ function transactionalInquiry(idx, period){
 	          button.setAttribute("onclick", `goPage(${1})`);
 	          break;
 	        case ">>":
+				button.setAttribute('id','lastPageButton');
 	          button.setAttribute("onclick", `goPage(${pageNum})`);
 	          break;
 	        case "<":
@@ -301,7 +307,7 @@ function transactionalInquiry(idx, period){
 	          break;
 	      }
 	      pageContainer.append(button);
-	    }
+	    } 
 	  });
 				
 		baseContainer.append(pageContainer);
@@ -330,19 +336,30 @@ function drawTableBody(list,page){
 	
 	const tBody = document.createElement('tbody');
 	
-	const transactionalInformation = list;
+	//let transactionalInformation = list;
 	
-	if((searchKeyword.branch_name!=undefined && searchKeyword.branch_name!='')
-	|| (searchKeyword.tran_type!=undefined && searchKeyword.tran_type!='')
-	|| (searchKeyword.print_content!=undefined && searchKeyword.print_content!='')){
+	const transactionalInformation = list.reduce((acc,cur)=>{
+		const branch_name_condition =  
+		(searchKeyword.branch_name!=undefined && searchKeyword.branch_name!='') 
+		? cur.branch_name.includes(searchKeyword.branch_name) : true;
 		
-		transactionalInformation.forEach((e)=>{
-			console.log(e);
-		})
+		const tran_type_condition = 
+		(searchKeyword.tran_type!=undefined && searchKeyword.tran_type!='') 
+		? cur.tran_type.includes(searchKeyword.tran_type) : true;
 		
-	}
-			
-	let startIdx = ((page-1)*18)+1;
+		const print_content_condition = 
+		(searchKeyword.print_content!=undefined && searchKeyword.print_content!='') 
+		? cur.print_content.includes(searchKeyword.print_content) : true;
+		
+		if(branch_name_condition && tran_type_condition && print_content_condition){
+			acc.push(cur);
+		}
+		return acc;
+	},[])
+				
+	let startIdx = ((page-1)*18);
+	 
+	changeCnt(transactionalInformation.length);
 	
 	if(startIdx + 18 < resListCnt){
 		for(let i = startIdx ; i < startIdx+18; i ++){
@@ -385,13 +402,14 @@ function drawTableBody(list,page){
 	}
 	
 	tBody.setAttribute('id','t_body');
-	
+
 	return tBody;
 }
 
 
 /**page function */
 function changePage(nowPage) {
+	nowPageNum = nowPage;
 	const tranTable = document.getElementById('tran_table');
 	const oldBody = document.getElementById('t_body');
 	tranTable.removeChild(oldBody);
@@ -416,7 +434,6 @@ function changePage(nowPage) {
 
 /**pageButton */
 function createPageButton(firstIdx, lastIdx) {
-	  
   const pageButtonContainer = document.getElementById("pageButtonContainer");
   
   while (pageButtonContainer.hasChildNodes()) {
@@ -436,17 +453,45 @@ function createPageButton(firstIdx, lastIdx) {
 
 /**move page */
 function goPage(page) {
+  nowPageNum = page;
   changePage(page);
 }
 
 function nextPage() {
   if (nowPageNum < pageNum) {
-    changePage(nowPageNum + 1);
+	  nowPageNum = nowPageNum + 1;
+    changePage(nowPageNum);
   }
 }
 
 function prevPage() {
   if (nowPageNum > 1) {
-    changePage(nowPageNum - 1);
+	  nowPageNum = nowPageNum -1;
+    changePage(nowPageNum);
   }
+}
+
+function changeCnt(cnt){
+	resListCnt =cnt; //거래 카운트
+	pageNum = parseInt(resListCnt/20); 
+	const pageRemainder = resListCnt%20;
+	
+	if(pageRemainder != 0){
+		pageNum = pageNum + 1;
+	}; //총 페이지 개수
+	
+	const lastPageButton = document.getElementById('lastPageButton');
+	if(lastPageButton!=null){
+		lastPageButton.setAttribute('onclick', `goPage(${pageNum})`);		
+	}
+}
+
+function cleanSearch(){
+		const branch_name = document.getElementById('branch_name');
+		const tran_type = document.getElementById('tran_type');
+		const print_content = document.getElementById('print_content');
+		
+		branch_name.value='';
+		tran_type.value = '';
+		print_content.value = '';
 }

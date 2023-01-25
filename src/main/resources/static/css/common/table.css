@@ -41,6 +41,8 @@
   border-spacing: 0;
   width: 100%;
   font-size: 15px;
+  border: solid 1px;
+  border-radius: 3px;
 }
 
 .search_table th,
