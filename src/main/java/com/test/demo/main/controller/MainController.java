@@ -47,18 +47,5 @@ public class MainController {
        
        return "/main";
 	}
-	
-	@GetMapping("/2")
-	public String main2(HttpServletRequest req,HttpSession session,Model model){
-        
-		//TokenDTO tokenDTO = (TokenDTO) session.getAttribute("tokenDTO");
-		
-		String code = req.getParameter("code");
-       if(code!="") {
-    	   model.addAttribute("code", code);    	   
-       }
-       
-       return "/main2";
-	}
 
 }

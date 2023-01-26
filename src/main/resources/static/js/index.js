@@ -30,7 +30,7 @@ function signUp(){
 		}
 		if(tokenDTO.accessToken){
 			
-			const signCancelUri = '/main/2'
+			const signCancelUri = '/main'
 			
 			window.location=signCancelUri;
 			

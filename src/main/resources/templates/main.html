@@ -38,11 +38,80 @@
       </div>
       <div class="right container" id="right_container">
         <div class="mt50 container_child" id="table_title" style="font-size: 50px;">Open Banking</div>
+        <div class="mt110 container_child2" id="excelContainer">
+	        <select id="excelOption" class="select_box">
+				 	<option value="all">전체</option>
+				 	<option value="table">화면</option>
+			 	</select>
+			 <button id="excelButton" onclick="noData()" class="ml5 excel_button">Excel</button>			
+		</div>
         <div
           class="w1200 h800 mt150 mb100 brs1 br10 container_child"
           id="table"
           style="background-color: white; color: black;"
           >
+          <div id="baseContainer" class="w100p h800 br5">
+			 <div id="searchContainer" class="w100p h80 mt10 search_container">
+				 <table id="searchTable" class="search_table">
+					 <colgroup>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 	<col width="10%"/>
+					 </colgroup>
+					 <tbody>
+						 <tr class="body_tr">
+							<td class="td_title">입출금</td>
+							<td>
+								<select id="inoutType" class="select_box" name="inquiryType" onchange="selectInOut()">
+									 <option value="all">전체</option>
+									 <option value="입금">입금</option>
+									 <option value="출금">출금</option>
+								 </select>
+					 		</td>
+							<td class="td_title">거래일</td>
+							<td>
+								<select id="tranDate" class="select_box">
+								 	<option value="all">전체</option>
+								 	<option value="7">1주일</option>
+								 	<option value="30">1개월</option>
+								 	<option value="90">3개월</option>
+								 	<option value="100">6개월</option>
+							 	</select>
+							</td>
+							<td class="td_title">-</td>
+							<td>-</td>
+							<td class="td_title">-</td>
+							<td>-</td>
+						 </tr>
+						 <tr class="body_tr">
+							 <td class="td_title">거래내용</td>
+							 <td><input id="tranType" class="w90p h30"/></td>
+							 <td class="td_title">통장인자내용</td>
+							 <td><input id="printContent" class="w90p h30"/></td>
+							 <td class="td_title">거래점</td>
+							 <td><input id="branchName" class="w90p h30"/></td>
+							 <td><button class="action_button" onclick="changePage(1)">검색</button></td>
+							 <td><button class="action_button" onclick="cleanSearch()">초기화</button></td>
+						 </tr>
+					 </tbody>
+				 </table>
+			 </div>
+			 <div id="tableContainer" class="w100p h640 mt5 brs1 table_container">
+				 
+			 </div>
+			 <div id="pageContainer" class="w100p h50 mt5 page_container">
+				 <button id="firstPageButton" onclick="goPage(1)" class="page_move_button"><<</button>
+				 <button id="prevPageButton" onclick="prevPage()" class="page_move_button"><</button>
+				 <div id="pageButtonContainer"></div>
+				 <button id="nextPageButton" onclick="nextPage()" class="page_move_button">></button>
+				 <button id="lastPageButton" class="page_move_button">>></button>
+			 </div>
+		  </div>
         </div>
       </div>
     </div>
@@ -53,5 +122,5 @@
   <script src="/js/main/account/list.js"></script>
   <script src="/js/main/account/cancel.js"></script>
   <script src="/js/main/inquiry/balance2.js"></script>
-  <script src="/js/main/inquiry/transactionalInformation.js"></script>
+  <script src="/js/main/inquiry/transactionalInformation2.js"></script>
 </html>
