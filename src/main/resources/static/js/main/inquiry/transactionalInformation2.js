@@ -59,6 +59,11 @@ function transactionalInquiry(idx){
 		
 		transactionList = data.res_list;
 		
+		/**excel down button */
+		const json = JSON.stringify(transactionList);	
+		const excelButton = document.getElementById('excelButton');
+		excelButton.setAttribute('onclick',`excelDownload(${json})`);
+		
 		/*for(let key in data){
 			console.log('key',key)
 			console.log('value',data[key])
@@ -121,18 +126,49 @@ function transactionalInquiry(idx){
 
 /**table_body transactionlInformation */
 function drawTableBody(list,page){
-	
+
 	const searchKeyword = {
-		"branch_name" : document.getElementById('branch_name')?.value,
-		"tran_type" : document.getElementById('tran_type')?.value,
-		"print_content" : document.getElementById('print_content')?.value
+		"inout_type" : document.getElementById('inoutType')?.value,
+		"tran_date" : document.getElementById('tranDate')?.value,
+		"branch_name" : document.getElementById('branchName')?.value,
+		"tran_type" : document.getElementById('tranType')?.value,
+		"print_content" : document.getElementById('printContent')?.value,
 	};
 	
 	const tBody = document.createElement('tbody');
 	
 	//let transactionalInformation = list;
 	
+	const today = new Date();
+	const tranDate = new Date(today);
+	
+	if(searchKeyword.tran_date != null && searchKeyword.tran_date != 'all'){
+		tranDate.setDate(today.getDate()-searchKeyword.tran_date);		
+	}
+	
+	const year = tranDate.getFullYear();
+	let month = tranDate.getMonth()+1;
+	if(month <10){
+		month = `0${month}`;
+	}
+	let date = tranDate.getDate();
+	if(date<10){
+		date = `0${date}`;
+	}
+	
+	const compareDate = `${year}${month}${date}`;
+
+	
 	const transactionalInformation = list.reduce((acc,cur)=>{
+		
+		const inout_type_condition = 
+		(searchKeyword.inout_type != undefined && searchKeyword.inout_type!='all')
+		? cur.inout_type == searchKeyword.inout_type : true;
+		
+		const tran_date_condition = 
+		(searchKeyword.tran_date !=undefined && searchKeyword.tran_date!='all')
+		? cur.tran_date > compareDate : true;
+		
 		const branch_name_condition =  
 		(searchKeyword.branch_name!=undefined && searchKeyword.branch_name!='') 
 		? cur.branch_name.includes(searchKeyword.branch_name) : true;
@@ -145,7 +181,11 @@ function drawTableBody(list,page){
 		(searchKeyword.print_content!=undefined && searchKeyword.print_content!='') 
 		? cur.print_content.includes(searchKeyword.print_content) : true;
 		
-		if(branch_name_condition && tran_type_condition && print_content_condition){
+		if(inout_type_condition && 
+			tran_date_condition &&
+			branch_name_condition && 
+			tran_type_condition && 
+			print_content_condition){
 			acc.push(cur);
 		}
 		return acc;
@@ -208,7 +248,7 @@ function changePage(nowPage) {
 	nowPageNum = nowPage;
 	const tranTable = document.getElementById('tran_table');
 	const oldBody = document.getElementById('t_body');
-	tranTable.removeChild(oldBody);
+	tranTable.removeChild(oldBody);	
 	
 	const tBody =  drawTableBody(transactionList,nowPage);
 	tranTable.append(tBody);
@@ -283,13 +323,17 @@ function changeCnt(cnt){
 }
 
 function cleanSearch(){
-		const branch_name = document.getElementById('branch_name');
-		const tran_type = document.getElementById('tran_type');
-		const print_content = document.getElementById('print_content');
+		const inoutType = document.getElementById('inoutType');
+		const tranDate = document.getElementById('tranDate');
+		const branchName = document.getElementById('branchName');
+		const tranType = document.getElementById('tranType');
+		const printContent = document.getElementById('printContent');
 		
-		branch_name.value='';
-		tran_type.value = '';
-		print_content.value = '';
+		inoutType.options[0].selected = true;
+		tranDate.options[0].selected = true;
+		branchName.value='';
+		tranType.value = '';
+		printContent.value = '';
 }
 
 function selectInOut(){

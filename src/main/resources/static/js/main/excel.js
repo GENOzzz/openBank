@@ -76,3 +76,8 @@ function renameKey ( obj, oldKey, newKey ) {
   obj[newKey] = obj[oldKey];
   delete obj[oldKey];
 };
+
+function noData(){
+	alert('거래내역 조회를 먼저 하여 주십시오');
+	return;
+}

@@ -343,7 +343,7 @@ function drawTableBody(list,page){
 		const branch_name_condition =  
 		(searchKeyword.branch_name!=undefined && searchKeyword.branch_name!='') 
 		? cur.branch_name.includes(searchKeyword.branch_name) : true;
-		
+				
 		const tran_type_condition = 
 		(searchKeyword.tran_type!=undefined && searchKeyword.tran_type!='') 
 		? cur.tran_type.includes(searchKeyword.tran_type) : true;
@@ -491,7 +491,6 @@ function cleanSearch(){
 		const branch_name = document.getElementById('branch_name');
 		const tran_type = document.getElementById('tran_type');
 		const print_content = document.getElementById('print_content');
-		
 		branch_name.value='';
 		tran_type.value = '';
 		print_content.value = '';
