@@ -387,7 +387,3 @@ function cleanSearch() {
 	tranType.value = '';
 	printContent.value = '';
 }
-
-function selectInOut() {
-	console.log('selectInOut');
-}

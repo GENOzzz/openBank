@@ -27,8 +27,8 @@ public class TokenAPIService {
 		System.out.println("===token issue service");
 		final String uri = "https://testapi.openbanking.or.kr/oauth/2.0/token?"
 				+ "code="+tokenDTO.getCode()+"&"
-				+ "client_id=220b7f4b-4382-4605-852c-ea7706539651&"
-				+ "client_secret=''&"
+				+ "client_id=df1bcab0-9154-4bcb-9775-a808a5fa49f6&"
+				+ "client_secret=&"
 				+ "redirect_uri=http://localhost:3000/main&"
 				+ "grant_type=authorization_code";
 		

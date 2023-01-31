@@ -25,27 +25,14 @@ const ageSum = objList.reduce((acc,cur)=>{
 
 
 function test(){
-	const testList = objList.reduce((acc,cur)=>{
-		const nameCondition = nameInput.value
-	          ? cur.name.includes(nameInput.value): true;
-	   const ageCondition = ageInput.value
-	          ? cur.age > ageInput.value : true;      
-	    
-	    if(nameCondition && ageCondition){
-			acc.push(cur);
-		}
-		
-		return acc;
-	},[]);
-	
-	for(let idx in testList){
-		container.innerText += idx + ': ';
-		for(let key in testList[idx]){
-		container.innerText += key + ': ';
-		container.innerText += testList[idx][key];			
-		}
-		container.innerHTML += '<br>';
-	}
-	
-	console.log('objList',objList);
+	fetch("/test/test",{
+			method:'POST',
+		})
+		.then(res => res.json())
+		.then(data =>{
+			console.log('success',data)
+			nameInput.value = data.test
+			ageInput.value = data.test2			
+		})
+		.catch(data => console.log('fail',data));
 }

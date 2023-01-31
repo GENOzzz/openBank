@@ -37,10 +37,10 @@ function signUp(){
 		}else{
 			window.location="https://testapi.openbanking.or.kr/oauth/2.0/authorize?"+
           "response_type=code&"+
-          "client_id=220b7f4b-4382-4605-852c-ea7706539651&"+
-          "redirect_uri="+window.location.host+"/main&"+
+          "client_id=df1bcab0-9154-4bcb-9775-a808a5fa49f6&"+
+          "redirect_uri=http://"+window.location.host+"/main&"+
           "scope=login inquiry transfer&"+
-          "state=68749843513579843513579321354988&"+		
+          "state=68749843513579843513579321354988&"+	
           "auth_type=0";
 		}
 	})

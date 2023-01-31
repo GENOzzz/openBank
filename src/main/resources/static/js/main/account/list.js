@@ -71,7 +71,7 @@ function accountList(){
 			
 			/**bank balance Container */
 			const balanceContainer = document.createElement('div');
-			balanceContainer.classList='h30 mt5 ml5 mr5 lh30 fts15';
+			balanceContainer.classList='h30 mt5 ml5 mr5 lh30 fts14';
 			balanceContainer.setAttribute('id',`balance${idx}`);
 			
 			//balanceContainer.addEventListener('DOMContentLoaded',balanceInquiry2(account.fintech_use_num, idx)) ;
