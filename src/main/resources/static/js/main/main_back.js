@@ -5,15 +5,10 @@ const user_seq_no = document.getElementById('user_seq_no');
 const token_type = document.getElementById('token_type');
 const expires_in = document.getElementById('expires_in');
 const scope = document.getElementById('scope');
-const loginId = document.getElementById('login_id')
 
 window.addEventListener('DOMContentLoaded',function(){
 	
-	if(!loginId){
-		alert('로그인이 필요합니다.')
-		window.location="/";
-	}
-	
+		
 	if(code.value){
 		
 		const codeData = new FormData();
@@ -25,33 +20,25 @@ window.addEventListener('DOMContentLoaded',function(){
 		})
 		.then(res => res.json())
 		.then(data => {
-			console.log('sucess : /token/issue',data);
+			console.log('sucess1',data);
 			
 			if(data.rsp_code === 'O0001'){
 				alert(data.rsp_message);
 				return;
 			}
 			
-			if(!access_token.value){
-				setData(data);			
-				const formData = new FormData(document.getElementById('mainForm'));				
-				fetch("/token/access",{
-					method:'POST',
-					cache:'no-cache',
-					body:formData
-				})
-				.then(res=>res.json())
-				.then(data=>{
-					if(data == false){
-						alert('wrong data...');
-					}
-					alert('계좌 등록이 완료 되었습니다.\n 다시 로그인 하여주십시오.')
-					window.location="/";
-					})
-				.catch(data=>console.log('fail : /token/access',data))
-			}else{
-				setData(data);			
-				const formData = new FormData(document.getElementById('mainForm'));
+			access_token.value = data.access_token;
+			refresh_token.value = data.refresh_token;
+			user_seq_no.value=data.user_seq_no;
+			token_type.value = data.token_type;
+			expires_in.value = data.expires_in;
+			scope.value = data.scope;
+	
+			const formData = new FormData(document.getElementById('mainForm'));
+			
+			console.log(formData)
+			
+			if(access_token.value != undefined){
 				fetch("/token/update",{
 					method:'POST',
 					cache:'no-cache',
@@ -65,16 +52,20 @@ window.addEventListener('DOMContentLoaded',function(){
 					alert('계좌 등록이 완료 되었습니다.\n 다시 로그인 하여주십시오.')
 					window.location="/";
 					})
-				.catch(data=>console.log('fail : /token/update',data))
-			}
+				.catch(data=>console.log('fail : /token/access',data))
+			}		
 		})
-		.catch(data => console.log('fail : /token/issue',data));
+		.catch(data => console.log('fail',data));
+	}else{
+		if(!access_token.value){
+			alert('로그인이 필요합니다.')
+			window.location="/";
+		}
 	}
 	
 	if(access_token.value){
 		accountList()
-	};
-		
+		};
 });
 
 function logout(){
@@ -93,13 +84,4 @@ function accountAdd(){
 	          "auth_type=0";
 	}
 	
-}
-
-function setData(data){
-	access_token.value = data.access_token;
-	refresh_token.value = data.refresh_token;
-	user_seq_no.value=data.user_seq_no;
-	token_type.value = data.token_type;
-	expires_in.value = data.expires_in;
-	scope.value = data.scope;
 }

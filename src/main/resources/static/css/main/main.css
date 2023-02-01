@@ -81,9 +81,22 @@
 	background-color: #A4A4A4;
 }
 
-.logout_button{
+.btn{
 	width: 100px;
 	height: 30px;
+}
+
+.account_add_button{
+	background-color: rgb(53, 132, 228);
+	color: snow;
+	border-radius: 5px;
+}
+
+.account_add_button:hover{
+	background-color: rgb(28, 113, 216);
+}
+
+.logout_button{
 	background-color: crimson;
 	color: snow;
 	border-radius: 5px;
@@ -126,10 +139,11 @@
 }
 
 .excel_button{
-	width: 60px;
+	width: 100px;
 	height: 30px;
 	background-color: green;
 	color: white;
+	border-radius: 5px;
 }
 
 .selected{

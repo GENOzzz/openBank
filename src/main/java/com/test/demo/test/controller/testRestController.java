@@ -1,6 +1,10 @@
 package com.test.demo.test.controller;
 
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -29,8 +33,23 @@ public class testRestController {
 	
 	@PostMapping("/test")
 	@ResponseBody
-	private JSONObject testAPI() throws MalformedURLException {
-		System.out.println("demo test call @@@");
-		return testService.testAPI();
+	private JSONObject testAPI(HttpServletRequest req) throws MalformedURLException {
+		
+		StringBuffer sb = req.getRequestURL();
+		
+		System.out.println(sb);
+		
+		
+		String string = sb.toString();
+		
+		URL url = new URL(string);
+		
+		String hostName = url.getHost() +":"+url.getPort();
+		
+		System.out.println(hostName);
+		
+		return null;
+		
+		//return testService.testAPI();
 	}
 }

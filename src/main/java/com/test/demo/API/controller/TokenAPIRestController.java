@@ -1,6 +1,9 @@
 package com.test.demo.API.controller;
 
 import java.net.MalformedURLException;
+import java.net.UnknownHostException;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +27,9 @@ public class TokenAPIRestController {
 	
 	@PostMapping("/issue")
 	@ResponseBody
-	private JSONObject tokenIssue(@ModelAttribute TokenDTO tokenDTO) throws MalformedURLException{
+	private JSONObject tokenIssue(HttpServletRequest req,@ModelAttribute TokenDTO tokenDTO) throws MalformedURLException, UnknownHostException{
 		System.out.println("===token issue");
-		JSONObject result = tokenAPIService.tokenIssue(tokenDTO);
+		JSONObject result = tokenAPIService.tokenIssue(tokenDTO,req);
 		System.out.println(result);
 		return result;
 	}	

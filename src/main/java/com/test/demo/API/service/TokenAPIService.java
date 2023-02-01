@@ -3,14 +3,19 @@ package com.test.demo.API.service;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,13 +28,20 @@ import com.test.demo.model.TokenDTO;
 @Service
 public class TokenAPIService {
 	
-	public JSONObject tokenIssue(TokenDTO tokenDTO) throws MalformedURLException {
+	public JSONObject tokenIssue(TokenDTO tokenDTO,HttpServletRequest req) throws MalformedURLException, UnknownHostException {
 		System.out.println("===token issue service");
+		
+		StringBuffer urlSb = req.getRequestURL();
+		String urlString = urlSb.toString();
+		URL reqUrl = new URL(urlString);
+		String hostName = reqUrl.getHost() +":"+reqUrl.getPort();
+		
+		
 		final String uri = "https://testapi.openbanking.or.kr/oauth/2.0/token?"
 				+ "code="+tokenDTO.getCode()+"&"
-				+ "client_id=df1bcab0-9154-4bcb-9775-a808a5fa49f6&"
-				+ "client_secret=&"
-				+ "redirect_uri=http://localhost:3000/main&"
+				+ "client_id=39965b53-c3e4-46a3-8c1b-55180370d35d&"
+				+ "client_secret=c8923354-b9d7-430a-915f-a609b27c9de6&"
+				+ "redirect_uri=http://" + hostName + "/main&"
 				+ "grant_type=authorization_code";
 		
 		JSONObject jsonObj = null; 																															
@@ -79,7 +91,10 @@ public class TokenAPIService {
 		      
 		      
 		    } else {
-		    	jsonObj = (JSONObject) parser.parse("{\"error\": \"error\"}");
+		    	Map <String,String> map = new HashMap<String,String>();
+		    	map.put("rsp_code", "O0001");
+		    	map.put("rsp_message", "token issue fail");
+		    	jsonObj = new JSONObject(map);
 		    }
 		  } catch (Exception e) {
 		  	System.err.println(e.toString());

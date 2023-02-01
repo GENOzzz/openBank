@@ -25,11 +25,10 @@ function signUp(){
 		if(!tokenDTO.loginResult){
 			alert('아이디 또는 비밀번호가 일치하지 않습니다.');
 			return;
-		}
-		
-		const signCancelUri = '/main'			
+		}			
+		const signCancelUri = '/main'
+			
 		window.location=signCancelUri;
-		
 	})
 	.catch(data=> console.log('fail', data));
 	

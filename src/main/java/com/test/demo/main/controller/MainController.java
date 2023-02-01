@@ -23,8 +23,13 @@ import com.test.demo.model.TokenDTO;
  * 2023. 1. 11. |PHH       |최초생성
  */
 @Controller
-@RequestMapping("/main")
+@RequestMapping
 public class MainController {
+	
+	@GetMapping("/")
+	public String index(){
+       return "/index";
+	}
 	
 	/**
 	 * @methodName : main
@@ -35,7 +40,7 @@ public class MainController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("")
+	@GetMapping("/main")
 	public String main(HttpServletRequest req,HttpSession session,Model model){
         
 		//TokenDTO tokenDTO = (TokenDTO) session.getAttribute("tokenDTO");

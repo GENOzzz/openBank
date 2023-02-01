@@ -31,8 +31,26 @@ public class TokenRestController {
 		System.out.println("=== token access");
 		//System.out.println(tokenDTO.toString());
 		tokenDTO.setInputKey(0);
-		tokenService.addToken(tokenDTO);
-		return true;
+		tokenDTO.setLoginKey(2);
+		return tokenService.addToken(tokenDTO);
+	}
+	
+	/**
+	
+	- @methodName tokenUpdate
+	- @date 2023.02.01
+	- @author root
+	- @param tokenDTO
+	- @return
+	- @description 계좌추가등록 시 update
+	*/
+	@PostMapping("/update")
+	@ResponseBody
+	public boolean tokenUpdate(@ModelAttribute TokenDTO tokenDTO){
+		System.out.println("=== token update");
+		//System.out.println(tokenDTO.toString());
+		tokenDTO.setLoginKey(2);
+		return tokenService.updateToken(tokenDTO);
 	}
 	
 }

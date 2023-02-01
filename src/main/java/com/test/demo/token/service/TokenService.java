@@ -19,18 +19,20 @@ public class TokenService {
 		
 		Connection con = null;//connector
 		Statement stmt = null;//??
-		ResultSet rs = null;//??
+		int rs = 0;//??
 				
 		boolean result = false;
-		
+				
 		try {
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection(dbFileUrl);
-			System.out.println("Token DB Connected!");
+			System.out.println("Token DB Connected Add");
 			
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("insert into TBL_TOKEN ("
+			String query=
+					"BEGIN; "
+					+ "insert into TBL_TOKEN ("
 					+ "LOGIN_KEY, "
 					+ "TOKEN_TYPE, "
 					+ "ACCESS_TOKEN, "
@@ -41,7 +43,7 @@ public class TokenService {
 					+ "INPUT_KEY, "
 					+ "INPUT_DATE)"
 					+ "values("
-					+ "2, "
+					+ "'" + tokenDTO.getLoginKey()+"', "
 					+ "'" + tokenDTO.getTokenType()+ "', "
 					+ "'" + tokenDTO.getAccessToken()+"', "
 					+ "'" + tokenDTO.getRefreshToken()+"', "
@@ -49,9 +51,19 @@ public class TokenService {
 					+ "'" + tokenDTO.getScope()+"', "
 					+ "'" + tokenDTO.getUserSeqNo()+"', "
 					+ "'" + tokenDTO.getInputKey() +"', "
-					+ "datetime('now'));");
+					+ "datetime('now'));";
 			
-			rs.close();
+			System.out.println(query);
+			
+			rs = stmt.executeUpdate(query);
+			
+			if(rs == 1) {
+				stmt.execute("COMMIT;");
+				result = true;
+			}else {
+				stmt.execute("ROLLBACK;");
+			}
+			
 			stmt.close();
 			con.close();
 			
@@ -68,6 +80,58 @@ public class TokenService {
 		TokenDTO tokenDTO = new TokenDTO();
 		
 		return tokenDTO;
+	}
+
+	public boolean updateToken(TokenDTO tokenDTO) {
+		Connection con = null;//connector
+		Statement stmt = null;//??
+		int rs = 0;//??
+				
+		boolean result = false;
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection(dbFileUrl);
+			System.out.println("Token DB Connected update!");
+			
+			stmt = con.createStatement();
+			
+			String query=
+					"BEGIN;"
+					+" UPDATE "
+					+ "TBL_TOKEN"
+					+ " SET "
+					+ "TOKEN_TYPE = '" + tokenDTO.getTokenType() +"'"
+					+ ", ACCESS_TOKEN = '" + tokenDTO.getAccessToken()+"'"
+					+ ", REFRESH_TOKEN = '" + tokenDTO.getRefreshToken()+"'"
+					+ ", EXPIRES_IN = '" + tokenDTO.getExpiresIn()+"'"
+					+ ", SCOPE = '" + tokenDTO.getScope()+"'"
+					+ ", USER_SEQ_NO = '" + tokenDTO.getUserSeqNo()+"'"
+					+ ", UPDATE_KEY = '" + tokenDTO.getInputKey() +"'"
+					+ ", UPDATE_DATE = datetime('now')"
+					+ " WHERE "
+					+ "LOGIN_KEY = '" + tokenDTO.getLoginKey() +"';";
+			
+			System.out.println(query);
+			
+			rs = stmt.executeUpdate(query);
+						
+			if(rs == 1) {
+				stmt.execute("COMMIT;");
+				result = true;
+			}else {
+				stmt.execute("ROLLBACK");
+			}
+			
+			stmt.close();
+			con.close();
+			
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		return result;
+		
 	}
 	
 }
