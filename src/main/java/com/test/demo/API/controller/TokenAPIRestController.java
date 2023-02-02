@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.test.demo.API.service.InquiryService;
 import com.test.demo.API.service.TokenAPIService;
+import com.test.demo.model.LoginDTO;
 import com.test.demo.model.TokenDTO;
 
 @Controller
@@ -32,6 +33,18 @@ public class TokenAPIRestController {
 		JSONObject result = tokenAPIService.tokenIssue(tokenDTO,req);
 		System.out.println(result);
 		return result;
-	}	
+	}
+	
+	@PostMapping("/extension")
+	@ResponseBody
+	public JSONObject tokenExtension(@ModelAttribute LoginDTO loginDTO) throws MalformedURLException, UnknownHostException {
+		System.out.println("===toekn extension");
+		loginDTO.setLoginKey(2);
+		JSONObject result = tokenAPIService.tokenExtension(loginDTO);
+		
+		System.out.println(result);
+		
+		return result;
+	}
 	
 }

@@ -1,3 +1,10 @@
+//엔터키로 검색 조회 실행
+document.addEventListener("keyup",(e)=>{
+	if(e.key === 'Enter'){
+		signUp();		
+	}
+})
+
 function signUp(){
 	
 	const inputId = document.getElementById('id').value

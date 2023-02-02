@@ -25,26 +25,26 @@ function excelDownload(json){
 			}
 		  newWorksheet = excelHandler.getJsonWorkSheet(json);
 	  }
-	
-	  // step 3. workbook에 새로만든 워크시트에 이름을 주고 붙인다.  
-	  XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+		
+		
+		const lastIdx=json.length -1;
+		const first = json[0].거래일;
+		const last = json[lastIdx].거래일;
+		
+		const title = `${first} ~ ${last} 거래내역`; 
+		
+	  // step 3. workbook에 새로만든 워크시트에 이름을 주고 붙인다.
+	  XLSX.utils.book_append_sheet(wb, newWorksheet, title);
 	
 	  // step 4. 엑셀 파일 만들기 
 	  let wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
 	
 	  // step 5. 엑셀 파일 내보내기 
-	  saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), excelHandler.getExcelFileName());
+	  saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}),title+`.xlsx`);
 	
 }
 
 let excelHandler = {	
-   	getExcelFileName : function(){
-		   const title = titleExcel();
-        return title+'.xlsx';	//파일명
-    },
-    getSheetName : function(){
-        return titleExcel();	//시트명
-    },
     getExcelData : function(){
         return document.getElementById('tran_table'); 	//TABLE id
     },
@@ -54,15 +54,6 @@ let excelHandler = {
     getWorksheet : function(){
         return XLSX.utils.table_to_sheet(this.getExcelData());
     }
-}
-
-function titleExcel(){
-	const data = $('.date');
-	const length = data.length;
-	const first = data[0].innerText;
-	const last = data[length-1].innerText;
-	return `${first} ~ ${last} 거래내역`;
-	
 }
 
 function s2ab(s) { 

@@ -41,7 +41,9 @@ public class TokenService {
 					+ "SCOPE, "
 					+ "USER_SEQ_NO, "
 					+ "INPUT_KEY, "
-					+ "INPUT_DATE)"
+					+ "INPUT_DATE, "
+					+ "UPDATE_KEY,"
+					+ "UPDATE_DATE )"
 					+ "values("
 					+ "'" + tokenDTO.getLoginKey()+"', "
 					+ "'" + tokenDTO.getTokenType()+ "', "
@@ -51,6 +53,8 @@ public class TokenService {
 					+ "'" + tokenDTO.getScope()+"', "
 					+ "'" + tokenDTO.getUserSeqNo()+"', "
 					+ "'" + tokenDTO.getInputKey() +"', "
+					+ "datetime('now'), "
+					+"'" + tokenDTO.getInputKey() + "', "
 					+ "datetime('now'));";
 			
 			System.out.println(query);
@@ -75,18 +79,11 @@ public class TokenService {
 		return result;
 	}
 	
-	public TokenDTO getToken(LoginDTO loginDTO) {
-		
-		TokenDTO tokenDTO = new TokenDTO();
-		
-		return tokenDTO;
-	}
-
 	public boolean updateToken(TokenDTO tokenDTO) {
 		Connection con = null;//connector
 		Statement stmt = null;//??
 		int rs = 0;//??
-				
+		
 		boolean result = false;
 		
 		try {
@@ -101,7 +98,7 @@ public class TokenService {
 					+" UPDATE "
 					+ "TBL_TOKEN"
 					+ " SET "
-					+ "TOKEN_TYPE = '" + tokenDTO.getTokenType() +"'"
+					+ "TOKEN_TYPE = 'Baerer'"
 					+ ", ACCESS_TOKEN = '" + tokenDTO.getAccessToken()+"'"
 					+ ", REFRESH_TOKEN = '" + tokenDTO.getRefreshToken()+"'"
 					+ ", EXPIRES_IN = '" + tokenDTO.getExpiresIn()+"'"
@@ -132,6 +129,52 @@ public class TokenService {
 		
 		return result;
 		
+	}
+
+	public TokenDTO getToken(LoginDTO loginDTO) {
+		Connection con = null;//connector
+		Statement stmt = null;//??
+		ResultSet rs = null;//??
+		
+		TokenDTO tokenDTO = new TokenDTO();
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection(dbFileUrl);
+			System.out.println("Token DB Connected Add");
+			
+			stmt = con.createStatement();
+			
+			String query=
+					"SELECT "
+					+ "access_token,	"
+					+ "refresh_token, "
+					+ "update_date "
+					+ "FROM "
+					+ "tbl_token	"
+					+ "WHERE "
+					+ "login_key = 2";
+			
+			System.out.println(query);
+			
+			rs = stmt.executeQuery(query);
+						
+			while(rs.next()) {
+				tokenDTO.setAccessToken(rs.getString("access_token"));
+				tokenDTO.setRefreshToken(rs.getString("refresh_token"));
+				tokenDTO.setAccessToken(rs.getString("update_date"));
+			}
+			
+			rs.close();
+			stmt.close();
+			con.close();
+			
+			
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		return tokenDTO;
 	}
 	
 }

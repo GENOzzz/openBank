@@ -235,7 +235,11 @@ function drawTableBody(list, page) {
 	}, [])
 
 	let startIdx = ((page - 1) * 18);
-
+	
+	const json = JSON.stringify(transactionalInformation);
+	const excelButton = document.getElementById('excelButton');
+	excelButton.setAttribute('onclick', `excelDownload(${json})`);
+	
 	changeCnt(transactionalInformation.length);
 
 	if (startIdx + 18 < resListCnt) {

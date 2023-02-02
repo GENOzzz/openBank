@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.test.demo.API.ClientDTO;
 import com.test.demo.login.service.LoginService;
 import com.test.demo.model.LoginDTO;
 import com.test.demo.model.TokenDTO;
@@ -32,6 +33,8 @@ public class LoginRestController {
 	@Autowired
 	LoginService loginService;
 	
+	ClientDTO clientDTO = new ClientDTO();
+	
 	@PostMapping("/do")
 	@ResponseBody
 	public Map<String,Object> login(HttpSession session,@ModelAttribute LoginDTO loginDTO) {	
@@ -40,9 +43,13 @@ public class LoginRestController {
 		TokenDTO tokenDTO = loginService.loginDo(loginDTO);
 		map.put("tokenDTO", tokenDTO);
 		
-		if(tokenDTO.getAccessToken()!="") {
+		if(tokenDTO.getAccessToken()!=null) {
 			session.setAttribute("tokenDTO", tokenDTO);
 		}
+		
+		session.setAttribute("loginId", tokenDTO.getLoginId());
+		
+		session.setAttribute("clientDTO", clientDTO);
 		
 		return map;
 	}

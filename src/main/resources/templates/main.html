@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/common/common.css" />
     <link rel="stylesheet" href="/css/common/table.css" />
     <link rel="stylesheet" href="/css/main/main.css" />
+    <link rel="stylesheet" href="/css/common/loading.css" />
     
     <script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -17,21 +18,25 @@
   </head>
   <body style="width: 100%; height: 100vh; font-family: monospace;">
 	  <form id="mainForm" method="post" action="/main/access">
-		<input type="hidden" id="login_id" name="loginId" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.loginId}"/>
+		<input type="hidden" id="login_id" name="loginId" th:if="${session.loginId}" th:value="${session.loginId}"/>
 		<input type="hidden" id="code" name="code" th:value="${code}"/>
 		<input type="hidden" id="token_type" name="tokenType"/>
 		<input type="hidden" id="access_token" name="accessToken" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.accessToken}"/>
+		<input type="hidden" id="access_token" name="accessToken" th:if="${session.tokenDTO == null}" />
 		<input type="hidden" id="refresh_token" name="refreshToken"/>
 		<input type="hidden" id="expires_in" name="expiresIn"/>
 		<input type="hidden" id="scope" name="scope"/>
 		<input type="hidden" id="user_seq_no" name="userSeqNo" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.userSeqNo}"/>
-		<input type="hidden" id="bank_tran_id" name="bankTranId" th:value="M202300224"/>
+		<input type="hidden" id="user_seq_no" name="userSeqNo" th:if="${session.tokenDTO==null}"/>
+		<input type="hidden" id="client_id" name="clientId" th:if="${session.clientDTO}" th:value="${session.clientDTO.clientId}"/>
+		<input type="hidden" id="bank_tran_id" name="bankTranId" th:if="${session.clientDTO}" th:value="${session.clientDTO.bankTranId}"/>
 	</form>
     <div class="base">
       <div class="left container" id="left_container">
       	<div class="mt50 container_child">
 			<div class="w350" style="display: flex; justify-content: space-between;">
 				<button class="btn account_add_button" type="button" onclick="accountAdd()">계좌등록</button>
+				<button class="btn extension_period_button" type="button" onclick="extensionOfPeriod()" th:if="${session.tokenDTO}">기간 연장</button>
 				<button class="btn logout_button" type="button" onclick="logout()">logout</button>	
 			</div>
 		</div>

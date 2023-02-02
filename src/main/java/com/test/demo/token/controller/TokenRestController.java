@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.test.demo.model.LoginDTO;
 import com.test.demo.model.TokenDTO;
 import com.test.demo.token.service.TokenService;
 

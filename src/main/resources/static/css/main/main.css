@@ -79,6 +79,7 @@
 
 .action_button:hover{
 	background-color: #A4A4A4;
+	cursor: pointer;
 }
 
 .btn{
@@ -94,6 +95,18 @@
 
 .account_add_button:hover{
 	background-color: rgb(28, 113, 216);
+	cursor: pointer;
+}
+
+.extension_period_button{
+	background-color: rgb(46, 194, 126);
+	color: snow;
+	border-radius: 5px;
+}
+
+.extension_period_button:hover{
+	background-color: rgb(38, 162, 105);
+	cursor: pointer;
 }
 
 .logout_button{
@@ -104,6 +117,7 @@
 
 .logout_button:hover{
 	background-color: rgb(162, 15, 45);
+	cursor: pointer;
 }
 
 .page_move_button{
@@ -114,6 +128,7 @@
 	border-radius: 5px;
 	font-size: 15px;
 	font-weight: 700;
+	cursor: pointer;
 }
 
 .now_page_button{
@@ -124,6 +139,7 @@
 	border-radius: 5px;
 	font-size: 15px;
 	font-weight: 700;
+	cursor: pointer;
 }
 
 .select_box{
@@ -144,6 +160,7 @@
 	background-color: green;
 	color: white;
 	border-radius: 5px;
+	cursor: pointer;
 }
 
 .selected{

@@ -13,7 +13,7 @@ function accountList(){
 		if(data.rsp_code!="A0000"){
 			alert(`${data.rsp_message}`);
 		};
-				
+		
 		/*for(let key in data){
 			console.log('key',key)
 			console.log('value',data[key])
@@ -82,17 +82,12 @@ function accountList(){
 			const buttonContainer = document.createElement('div')
 			buttonContainer.classList='h30 ml5 mt5 mr5 mb5 lh30';
 			buttonContainer.setAttribute('style','justify-content:space-around; display:flex');
-			
-			/*const balanceInquiryButton = document.createElement('button');
-			balanceInquiryButton.innerText='잔액 조회';
-			balanceInquiryButton.setAttribute('onclick',`balanceInquiry(${idx})`)
-			buttonContainer.appendChild(balanceInquiryButton);*/
 
-			const balanceInquiryButton = document.createElement('button');
+			/*const balanceInquiryButton = document.createElement('button');
 			balanceInquiryButton.classList='action_button';
 			balanceInquiryButton.innerText='잔액조회';
 			balanceInquiryButton.setAttribute('onclick',`balanceInquiry2('${account.fintech_use_num}', ${idx})`)
-			buttonContainer.appendChild(balanceInquiryButton);
+			buttonContainer.appendChild(balanceInquiryButton);*/
 			
 			const transactionalInquiryButton = document.createElement('button');
 			transactionalInquiryButton.classList='action_button';
@@ -105,7 +100,6 @@ function accountList(){
 			accountCancelButton.innerText='계좌 해지';
 			accountCancelButton.setAttribute('onclick',`accountCancel(${idx})`);
 			buttonContainer.appendChild(accountCancelButton);
-			
 			
 			accountContainer.appendChild(buttonContainer);
 			

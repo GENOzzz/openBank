@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded',function(){
 		.then(data => {
 			console.log('sucess1',data);
 			
-			if(data.rsp_code === 'O0001'){
+			if(data.rsp_code != 'O0000'){
 				alert(data.rsp_message);
 				return;
 			}

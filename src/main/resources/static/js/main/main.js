@@ -5,7 +5,8 @@ const user_seq_no = document.getElementById('user_seq_no');
 const token_type = document.getElementById('token_type');
 const expires_in = document.getElementById('expires_in');
 const scope = document.getElementById('scope');
-const loginId = document.getElementById('login_id')
+const loginId = document.getElementById('login_id');
+const clientId = document.getElementById('client_id');
 
 window.addEventListener('DOMContentLoaded',function(){
 	
@@ -27,9 +28,11 @@ window.addEventListener('DOMContentLoaded',function(){
 		.then(data => {
 			console.log('sucess : /token/issue',data);
 			
-			if(data.rsp_code === 'O0001'){
-				alert(data.rsp_message);
-				return;
+			if(data.rsp_code){
+				if(data.rsp_code != 'O0000'){
+					alert(data.rsp_message);
+					return;
+				}				
 			}
 			
 			if(!access_token.value){
@@ -44,6 +47,7 @@ window.addEventListener('DOMContentLoaded',function(){
 				.then(data=>{
 					if(data == false){
 						alert('wrong data...');
+						return;
 					}
 					alert('계좌 등록이 완료 되었습니다.\n 다시 로그인 하여주십시오.')
 					window.location="/";
@@ -82,13 +86,13 @@ function logout(){
 }
 
 function accountAdd(){
-	
+		
 	if(confirm('계좌등록을 진행하시겠습니까?')){
 		window.location="https://testapi.openbanking.or.kr/oauth/2.0/authorize?"+
 	          "response_type=code&"+
-	          "client_id=39965b53-c3e4-46a3-8c1b-55180370d35d&"+
+	          "client_id="+ clientId.value +"&"+
 	          "redirect_uri=http://"+window.location.host+"/main&"+
-	          "scope=login inquiry transfer&"+
+	          "scope=login inquiry&"+
 	          "state=68749843513579843513579321354988&"+	
 	          "auth_type=0";
 	}
@@ -102,4 +106,86 @@ function setData(data){
 	token_type.value = data.token_type;
 	expires_in.value = data.expires_in;
 	scope.value = data.scope;
+}
+
+function extensionOfPeriod(){
+	if(confirm('조회 권한 유효기간을 연장 하시겠습니까?')){
+		LoadingWithMask();
+		
+		fetch('/token/extension',{
+			method:'post',
+		})
+		.then(res=>res.json())
+		.then(data=>{
+			console.log('succcess : /token/extension', data)
+			if(data.rsp_code){
+				if(data.rsp_code != 'O0000'){
+					alert(data.rsp_message);
+					return;
+				}				
+			}
+			
+			const formData = new FormData();
+			formData.append('accessToken',data.access_token);
+			formData.append('refreshToken',data.refresh_token);
+			formData.append('expiresIn',data.expires_in);
+			formData.append('scope',data.scope);
+			formData.append('userSeqNo',data.user_seq_no);
+			
+			fetch('/token/update',{
+					method:'post',
+					cache:'no-cache',
+					body:formData
+			})
+			.then(res=>res.json())
+			.then(data=>{
+				if(data == false){
+				alert('/update : wrong');
+			}
+			closeLoadingWithMask();
+			alert('갱신이 완료되었습니다.\n 다시 로그인 하여주십시오.')
+			window.location="/";
+			})
+			.catch(data=> console.log('error : extension => update',data))
+		})
+		.catch(data=>console.log('error : /token/extension', data))
+	}
+}
+
+function LoadingWithMask() {
+    //화면의 높이와 너비를 구합니다.
+    var maskHeight = $(document).height();
+    var maskWidth  = window.document.body.clientWidth;
+     
+    //화면에 출력할 마스크를 설정해줍니다.
+    var mask       = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'>"
+    mask += "<div class='loading-container'>";
+    mask += 	"<div class='loading'></div>";
+    mask += 	"<div id='loading-text'>loading</div>"
+    mask += "</div>";  
+    mask +="</div>";
+     
+    //화면에 레이어 추가
+    $('body')
+        .append(mask)
+        
+        
+    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채웁니다.
+    $('#mask').css({
+            'width' : maskWidth
+            , 'height': maskHeight
+            , 'opacity' : '0.3'
+            , 'display' : 'flex'
+            , 'justify-content' : 'center'
+            , 'align-items': 'center'
+    }); 
+  
+    //마스크 표시
+    $('#mask').show();
+ 
+}
+
+function closeLoadingWithMask() {
+    $('#mask, #loadingImg').hide();
+    $('#mask, #loadingImg').remove();  
 }
