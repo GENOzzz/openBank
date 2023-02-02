@@ -28,6 +28,7 @@
 		<input type="hidden" id="scope" name="scope"/>
 		<input type="hidden" id="user_seq_no" name="userSeqNo" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.userSeqNo}"/>
 		<input type="hidden" id="user_seq_no" name="userSeqNo" th:if="${session.tokenDTO==null}"/>
+		<input type="hidden" id="token_update_date" th:if="${session.tokenDTO}" th:value="${session.tokenDTO.updateDate}"/>
 		<input type="hidden" id="client_id" name="clientId" th:if="${session.clientDTO}" th:value="${session.clientDTO.clientId}"/>
 		<input type="hidden" id="bank_tran_id" name="bankTranId" th:if="${session.clientDTO}" th:value="${session.clientDTO.bankTranId}"/>
 	</form>

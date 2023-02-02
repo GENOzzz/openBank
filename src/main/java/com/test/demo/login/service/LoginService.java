@@ -39,7 +39,8 @@ public class LoginService {
 					+ "LOGIN_PASSWORD, "
 					+ "ACCESS_TOKEN, "
 					+ "REFRESH_TOKEN, "
-					+ "USER_SEQ_NO "
+					+ "USER_SEQ_NO, "
+					+ "tt.UPDATE_DATE "
 					+ "from TBL_LOGIN tl "
 					+ "left join TBL_TOKEN tt on tl.LOGIN_KEY = tt.LOGIN_KEY "
 					+ "where "
@@ -52,6 +53,7 @@ public class LoginService {
 					tokenDTO.setAccessToken(rs.getString("ACCESS_TOKEN"));
 					tokenDTO.setRefreshToken(rs.getString("REFRESH_TOKEN"));
 					tokenDTO.setUserSeqNo(rs.getString("USER_SEQ_NO"));
+					tokenDTO.setUpdateDate(rs.getString("UPDATE_DATE"));
 				}else {
 					tokenDTO.setLoginResult(false);
 				}

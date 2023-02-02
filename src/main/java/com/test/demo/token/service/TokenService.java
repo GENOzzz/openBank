@@ -162,7 +162,7 @@ public class TokenService {
 			while(rs.next()) {
 				tokenDTO.setAccessToken(rs.getString("access_token"));
 				tokenDTO.setRefreshToken(rs.getString("refresh_token"));
-				tokenDTO.setAccessToken(rs.getString("update_date"));
+				tokenDTO.setUpdateDate(rs.getString("update_date"));
 			}
 			
 			rs.close();

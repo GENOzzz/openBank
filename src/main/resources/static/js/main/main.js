@@ -7,6 +7,7 @@ const expires_in = document.getElementById('expires_in');
 const scope = document.getElementById('scope');
 const loginId = document.getElementById('login_id');
 const clientId = document.getElementById('client_id');
+const tokenUpdateDate = document.getElementById('token_update_date');
 
 window.addEventListener('DOMContentLoaded',function(){
 	
@@ -15,6 +16,8 @@ window.addEventListener('DOMContentLoaded',function(){
 		window.location="/";
 	}
 	
+	//let transactionalInformation = list;
+
 	if(code.value){
 		
 		const codeData = new FormData();
@@ -78,6 +81,19 @@ window.addEventListener('DOMContentLoaded',function(){
 	if(access_token.value){
 		accountList()
 	};
+	
+	if(tokenUpdateDate.value!= null && tokenUpdateDate.value != '') {
+		const today = new Date();
+		const tokenRestOfDate = new Date(tokenUpdateDate.value);
+		const diffMSec = today.getTime() - tokenRestOfDate.getTime();
+		const diffDate = diffMSec / (24 * 60 * 60 * 1000);
+		const alarm = 90-Math.floor(diffDate);
+		console.log(alarm);
+		if(alarm<8){
+			alert(`토큰의 유효기간이 ${alarm}일 남았습니다.\n 기간 연장을 클릭하여 주십시오.`);
+		}
+	}
+	
 		
 });
 
@@ -109,7 +125,7 @@ function setData(data){
 }
 
 function extensionOfPeriod(){
-	if(confirm('조회 권한 유효기간을 연장 하시겠습니까?')){
+	if(confirm('조회 권한 유효기간을 연장 하시겠습니까?\n약 3분가량 소요됩니다.')){
 		LoadingWithMask();
 		
 		fetch('/token/extension',{
@@ -118,9 +134,11 @@ function extensionOfPeriod(){
 		.then(res=>res.json())
 		.then(data=>{
 			console.log('succcess : /token/extension', data)
+			
 			if(data.rsp_code){
 				if(data.rsp_code != 'O0000'){
 					alert(data.rsp_message);
+					closeLoadingWithMask();
 					return;
 				}				
 			}

@@ -43,6 +43,8 @@ public class LoginRestController {
 		TokenDTO tokenDTO = loginService.loginDo(loginDTO);
 		map.put("tokenDTO", tokenDTO);
 		
+		//tokenDTO.setUpdateDate("2022-11-11 12:13:54");
+		
 		if(tokenDTO.getAccessToken()!=null) {
 			session.setAttribute("tokenDTO", tokenDTO);
 		}

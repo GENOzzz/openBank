@@ -156,7 +156,7 @@ public class TokenAPIService {
 		    con.setRequestMethod("POST");
 
 		    //서버에 연결되는 Timeout 시간 설정
-		    con.setConnectTimeout(120000);
+		    con.setConnectTimeout(180000);
 
 		    //InputStream 읽어 오는 Timeout 시간 설정
 		    con.setReadTimeout(120000);
