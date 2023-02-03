@@ -10,6 +10,7 @@ function accountList(){
 	})
 	.then(res=>res.json())
 	.then(data=>{
+		console.log(data.rsp_code);
 		if(data.rsp_code!="A0000"){
 			alert(`${data.rsp_message}`);
 		};

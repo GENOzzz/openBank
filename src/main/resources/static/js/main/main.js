@@ -125,7 +125,7 @@ function setData(data){
 }
 
 function extensionOfPeriod(){
-	if(confirm('조회 권한 유효기간을 연장 하시겠습니까?\n약 3분가량 소요됩니다.')){
+	if(confirm('조회 권한 유효기간을 연장 하시겠습니까?\n최대 3분가량 소요됩니다.')){
 		LoadingWithMask();
 		
 		fetch('/token/extension',{
@@ -136,6 +136,12 @@ function extensionOfPeriod(){
 			console.log('succcess : /token/extension', data)
 			
 			if(data.rsp_code){
+				if(data.rsp_code === 'A0007'){
+					alert(`${data.rsp_message}\n다시 시도해주시기 바랍니다.`);
+					closeLoadingWithMask();
+					return;
+				}
+				
 				if(data.rsp_code != 'O0000'){
 					alert(data.rsp_message);
 					closeLoadingWithMask();

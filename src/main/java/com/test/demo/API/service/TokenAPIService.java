@@ -159,7 +159,7 @@ public class TokenAPIService {
 		    con.setConnectTimeout(180000);
 
 		    //InputStream 읽어 오는 Timeout 시간 설정
-		    con.setReadTimeout(120000);
+		    con.setReadTimeout(180000);
 
 		    //URLConnection에 대한 doOutput 필드값을 지정된 값으로 설정한다. 
 		    //URL 연결은 입출력에 사용될 수 있다. 
